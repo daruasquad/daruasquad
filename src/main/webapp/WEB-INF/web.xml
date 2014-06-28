@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+		xmlns="http://java.sun.com/xml/ns/javaee" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+		version="3.0">
+
+	<!-- Configurações de JSF -->
+
+	<!-- Remover antes de colocar a aplicação em produção. -->
+	<context-param>
+		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+		<!-- Defina "0" para alterar páginas com a aplicação funcionando. -->
+		<param-value>0</param-value>
+	</context-param>
+
+	<!-- Remover antes de colocar a aplicação em produção. -->
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<!-- Defina "Development" para ajudar a identificar erros. -->
+		<param-value>Development</param-value>
+	</context-param>
+
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<!-- Será iniciado com a aplicação na ordem informada. 1 será o primeiro, 2 será o segundo e assim por diante. -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<!-- Extensão, ou sufixo, das páginas JSF. Poder ser *.xhtml, *.jsf ou qualquer outra.
+		Se for *.jsf, por exemplo, a página index.xhtml será acessada no navegador pelo endereço localhost:9090/lab-jsf/index.jsf.
+		Quando for *.xhtml coincidirá com a extensão do nome do arquivo e assim pode ser mais intuitivo para o desenvolvedor. -->
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+
+	<!-- Configurações da aplicação. -->
+
+	<welcome-file-list>
+		<!-- Ao informar no navegador o endereço da aplicação, localhost:9090/lab-jsf por exemplo, a página "index.html" será chamada.
+		Pode ser qualquer endereço dentro da própria aplkicação. -->
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
+
+</web-app>
