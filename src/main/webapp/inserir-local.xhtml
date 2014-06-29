@@ -23,11 +23,19 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				getMyPositionCenter();
+				insertLocalMapEvents();
+				Application.map.setZoom(12);
 			});
 		</script>
 		<form method="post" action="##">
 			<div class="well">Clique no mapa para selecionar o local. Insira um nome e veja a mágica.</div>
+			<b><address id="formAddress"></address></b>
 			<h5 class="inline-block">Nome do local:</h5> <input  />
+			<input type="hidden" name="rua" id="rua" />
+			<input type="hidden" name="bairro" id="bairro" />
+			<input type="hidden" name="cidade" id="cidade" />
+			<input type="hidden" name="estado" id="estado" />
+			<input type="hidden" name="pais" id="pais" />
 			<button onclick="validateForm()" class="btn btn-default btn-sm"><i class="fa fa-save"></i>  Inserir</button>
 		</form> 
 	</div>

@@ -44,6 +44,13 @@ function addMarker(idLocal, lat, lon, title) {
 
 }
 
+function clearMarkers() {
+	Application.map.markers.forEach(function(e){
+		e.setMap(null);
+	});
+	Application.map.markers.length=0;
+}
+
 function getMyPositionCenter() {
 	
 	if (navigator.geolocation) {
@@ -57,4 +64,46 @@ function getMyPositionCenter() {
 function centerMapHere(position) {
 	var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 	Application.map.setCenter(pos);
+}
+
+
+function insertLocalMapEvents() {
+	google.maps.event.addListener(Application.map, 'click', function(event) {
+		clearMarkers();
+		addMarker(null, event.latLng.lat(),  event.latLng.lng(), "New place");
+		getAdressGeocode(event.latLng.lat(), event.latLng.lng(), fillInsertFormAdress);
+	});
+}
+
+
+function getAdressGeocode(lat, lon, callback) {
+	$.ajax({
+		url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + lat +"," + lon + "&sensor=true",
+		success: callback
+	});
+} 
+
+function fillInsertFormAdress(data) {
+	var formatedAddress = data.results[0].formatted_address;	
+	var rua 	=  	extractGeocodeInfo("route", data);
+	var bairro 	= 	extractGeocodeInfo("neighborhood", data);
+	var cidade 	= 	extractGeocodeInfo("locality", data);
+	var estado 	= 	extractGeocodeInfo("administrative_area_level_1", data);
+	var pais 	=	extractGeocodeInfo("country", data);
+	
+	$("#rua").val(rua.long_name);
+	$("#bairro").val(bairro.long_name);
+	$("#cidade").val(cidade.long_name);
+	$("#estado").val(estado.long_name);
+	$("#pais").val(pais.long_name);
+	
+	$("#formAddress").html(formatedAddress);
+}
+
+
+function extractGeocodeInfo(infoName, data){
+	var extract = data.results[0].address_components.filter(function(component) {
+	    return component.types.indexOf(infoName) >= 0;
+	});
+	return extract[0];
 }
