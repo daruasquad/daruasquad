@@ -7,6 +7,7 @@ public class Local {
 	//Atríbutos da classe
 	private String nome;
 	private List<Obstaculo> obstaculos;
+	private String endereco;
 	private String bairro;
 	private String cidade;
 	private String estado;
@@ -27,6 +28,12 @@ public class Local {
 	}
 	public void setObstaculos(List<Obstaculo> obstaculos) {
 		this.obstaculos = obstaculos;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 	public String getBairro() {
 		return bairro;
