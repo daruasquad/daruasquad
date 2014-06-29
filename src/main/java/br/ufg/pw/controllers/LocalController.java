@@ -11,12 +11,13 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import br.ufg.pw.entidades.Local;
+import br.ufg.pw.entidades.Obstaculo;
 import br.ufg.pw.services.LocalServices;
 
 
-@ManagedBean
+@ManagedBean (name="local")
 @RequestScoped
-public class Local {
+public class LocalController {
 	
 	private List<Local> searchResult = new ArrayList<Local> () ;
 	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -41,7 +42,7 @@ public class Local {
 	public List<Local> pesquisarId(Integer id) {
 		LocalServices localService = new LocalServices();		
 		String busca = parameters.get("id");
-		///searchResult = localService.pesquisarId(busca/*, lat, lon*/);
+		//searchResult = localService.pesquisarId(busca/*, lat, lon*/);
 		genFakeResultId();
 		return searchResult;
 	}
@@ -54,7 +55,35 @@ public class Local {
 		l1.setNome("Local 1");
 		l1.setLatitude(-16.671128);
 		l1.setLongitude(-49.282724);
+		l1.setBairro("Meu Bairro");
+		l1.setCidade("Goiânia");
+		l1.setEstado("Go");
+		l1.setPais("Brèsil");
+		l1.setUsuarioInsersor("user1");
+		
+		l1.setObstaculos(genFakeObstaculoResult());
+		
 		searchResult.add(l1);
+		
+	}
+	
+	private List<Obstaculo> genFakeObstaculoResult() {
+		List<Obstaculo> obs = new ArrayList<Obstaculo>();
+		Obstaculo rampa = new Obstaculo();
+		rampa.setNome("Rampa");
+		Obstaculo corrimao = new Obstaculo();
+		rampa.setNome("Corrimão");
+		Obstaculo nope = new Obstaculo();
+		rampa.setNome("Nope");
+		Obstaculo zip = new Obstaculo();
+		rampa.setNome("Zip");
+		
+		obs.add(rampa);
+		obs.add(corrimao);
+		obs.add(nope);
+		obs.add(zip);
+		
+		return obs;
 	}
 	
 	private void genFakeResultMult() {

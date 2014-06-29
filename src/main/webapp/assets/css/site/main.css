@@ -5,3 +5,15 @@ body {
 #map {
 	margin: 20px 0px 10px 0px;
 }
+
+.inline {
+	display: inline !important;
+}
+
+.inline-block {
+	display: inline-block !important;
+}
+
+.block {
+	display: block !important;
+}

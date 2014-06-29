@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:daruasquad="daruasquad/facelets">
+
+<daruasquad:template-header></daruasquad:template-header>
+<body>
+	<div class="container">
+		<daruasquad:template-menu-top></daruasquad:template-menu-top>
+		<div class="searchContainer">
+			<form method="post" action="#">
+				<input type="text" id="search" name="busca" class=" col-md-11 col-sm-11 col-xs-12" />
+				<input type="submit" value="submeter" />
+				<button type="button"
+					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
+					<i class="fa fa-search fa-1x"></i>
+				</button>
+			</form>
+		</div>
+		<daruasquad:map-fullmap></daruasquad:map-fullmap>
+		
+		<ui:repeat value="#{local.pesquisarId(12)}" var="value">
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							 #{value.nome}
+						</h4>
+					</div>
+					
+					<div>
+						<div class="panel-body">
+							<div class="col-md-12">
+								<h5 class="inline-block">Obstáculos:</h5>
+								<ui:repeat  value="#{value.obstaculos}" var="obs">
+									<div>
+										#{obs.nome}
+									</div>
+								</ui:repeat>
+								#{value.obstaculos}
+							</div>
+							<div class="col-md-12">
+								<h5 class="inline-block">Endereço:</h5> #{value.bairro}, #{value.cidade} -#{value.estado}, #{value.pais} 
+							</div>
+							<div class="col-md-12">
+								<h5 class="inline-block">Postado por</h5> 	#{value.usuarioInsersor}
+							</div>
+
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function() {
+								addMarker(Math.random(), #{value.latitude}, #{value.longitude}, "#{value.nome}")
+								Application.map.setCenter(new google.maps.LatLng( #{value.latitude}, #{value.longitude}));
+								Application.map.setZoom(16)
+							});
+						</script>
+					</div>
+				</div>
+			</div>
+		</ui:repeat>
+	</div>
+
+</body>
+<daruasquad:template-footer></daruasquad:template-footer>
+</html>
