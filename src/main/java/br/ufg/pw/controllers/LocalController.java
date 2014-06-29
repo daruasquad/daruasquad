@@ -110,6 +110,11 @@ public class LocalController {
 		l3.setLongitude(-49.224960);
 		l4.setLongitude(-49.244443);
 		
+		l1.setObstaculos(genFakeObstaculoResult());
+		l2.setObstaculos(genFakeObstaculoResult());
+		l3.setObstaculos(genFakeObstaculoResult());
+		l4.setObstaculos(genFakeObstaculoResult());
+		
 		
 		searchResult.add(l1);
 		searchResult.add(l2);

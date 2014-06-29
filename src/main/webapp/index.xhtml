@@ -21,7 +21,11 @@
 			</form>
 		</div>
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
-
+		<script type="text/javascript">
+			$(document).ready(function() {
+				getMyPositionCenter();
+			});
+		</script>
 
 		<!-- >daruasquad:midia-pre-galery-struct></daruasquad:midia-pre-galery-struct -->
 		<!-- >daruasquad:midia-pos-galery-struct></daruasquad:midia-pos-galery-struct -->
@@ -43,7 +47,7 @@
 								#{value.nome}
 							</div>
 							<div class="col-md-2 col-xs-12">
-								<button class="pull-right btn btn-sm"><i class="fa fa-search"></i> Ver detalhes</button>
+								<a class="pull-right btn btn-default btn-sm" href="local-details.xhtml?id=12"><i class="fa fa-search"></i> Ver detalhes</a>
 							</div>
 						
 						</div>

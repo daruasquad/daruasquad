@@ -43,3 +43,18 @@ function addMarker(idLocal, lat, lon, title) {
 	Application.map.markers.push(marker);
 
 }
+
+function getMyPositionCenter() {
+	
+	if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(centerMapHere);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+	
+}
+
+function centerMapHere(position) {
+	var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	Application.map.setCenter(pos);
+}
