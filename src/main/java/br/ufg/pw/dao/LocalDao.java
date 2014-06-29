@@ -167,6 +167,44 @@ public class LocalDao {
 		return local;
 	}
 	
+	/** Método responsável pela exclusão de um local no Banco de Dados 
+	 * @author brunokarpo
+	 * @param local: Referencia do local que será excluido
+	 * @return void*/
+	public void excluir(Local local) {
+		
+		try {
+			conn = JdbcUtil.createConnection();
+			
+			conn.setAutoCommit(false);
+			
+			//Excluir os tipos de obstáculos desse local
+			ObstaculoDao obsDao = new ObstaculoDao();
+			obsDao.excluir(local.getId(), conn, pstmt);
+			
+			pstmt = conn.prepareStatement("delete from local where id = ?");
+			pstmt.setInt( 1, local.getId() );
+			
+			pstmt.executeUpdate();
+			
+			conn.commit();
+			
+		} catch(Exception e) {
+			
+			try {
+				//Se der problema dá rollback na transação
+				conn.rollback();
+				e.printStackTrace();
+				
+			} catch (Exception e1) {
+				//Ai não dá para fazer nada
+			}
+		} finally {
+			JdbcUtil.close(conn, pstmt);
+		}
+		
+	}
+	
 	/** Método criado para buscar o ID quando estamos inserindo um objeto recebido como parâmetro no método inserir 
 	 * @author brunokarpo
 	 * @param local: informações do local que o usuário está inserindo

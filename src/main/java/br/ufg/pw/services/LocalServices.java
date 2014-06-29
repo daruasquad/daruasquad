@@ -46,4 +46,11 @@ public class LocalServices {
 	public Local pesquisar(int id) {
 		return localDao.buscar(id);
 	}
+	/** Exclui um local recebido como parâmetro 
+	 * @author brunokarpo
+	 * @param local Local que será excluído
+	 * @return void*/
+	public void excluir(Local local) {
+		localDao.excluir(local);
+	}
 }

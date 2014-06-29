@@ -80,5 +80,25 @@ public class ObstaculoDao {
 			
 	}
 	
-	
+	/** Método responsável por excluir uma lista de obstáculos referente a um local que será excluído 
+	 * @author brunokarpo
+	 * @param id Identificador do local no Banco de Dados que será excluído
+	 * @param conn : Conexão já aberta com o banco de dados dentro de uma transação
+	 * @param pstmt : Statement já aberto da transação da conexão
+	 * @return void
+	 * */ 
+	protected void excluir(int idLocal, Connection conn, PreparedStatement pstmt) {
+		
+		try {
+			
+			pstmt = conn.prepareStatement("delete from tipo_obstaculo_em_local where id_local = ?");
+			pstmt.setInt(1, idLocal);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
