@@ -15,6 +15,7 @@ public class Local {
 	private double latitude;
 	private double longitude;
 	private String usuarioInsersor;
+	private int id;
 	
 	//Métodos Getter e Setter
 	public String getNome() {
@@ -77,7 +78,11 @@ public class Local {
 	public void setUsuarioInsersor(String usuarioInsersor) {
 		this.usuarioInsersor = usuarioInsersor;
 	}
-	
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}	
 	
 }
