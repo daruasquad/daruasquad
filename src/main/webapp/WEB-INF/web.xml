@@ -4,7 +4,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 		version="3.0">
-
+ 
 	<!-- Configurações de JSF -->
 
 	<!-- Remover antes de colocar a aplicação em produção. -->
@@ -21,7 +21,12 @@
 		<param-value>Development</param-value>
 	</context-param>
 
-
+	<!-- Carrega TAGS customizadas nos .jsf -->
+	 <context-param>
+	    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+	    <param-value>/WEB-INF/jsf-tags/daruasquad.taglib.xml</param-value>
+	 </context-param>
+	 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -35,8 +40,11 @@
 		Se for *.jsf, por exemplo, a página index.xhtml será acessada no navegador pelo endereço localhost:9090/lab-jsf/index.jsf.
 		Quando for *.xhtml coincidirá com a extensão do nome do arquivo e assim pode ser mais intuitivo para o desenvolvedor. -->
 		<url-pattern>*.xhtml</url-pattern>
+		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
-
+	 
+	
+	
 	<!-- Configurações da aplicação. -->
 
 	<welcome-file-list>
