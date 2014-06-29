@@ -13,7 +13,7 @@
 		<div class="searchContainer">
 			<form method="post" action="#">
 				<input type="text" id="search" name="busca" class=" col-md-11 col-sm-11 col-xs-12" />
-				<button type="button" onclick="this.parent.submit()"
+				<button type="submit" onclick="this.parent.submit()"
 					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
 					<i class="fa fa-search fa-1x"></i>
 				</button>
@@ -27,6 +27,7 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							 #{value.nome}
+							 <a class="btn btn-default btn-xs pull-right"><i class="fa fa-car"></i> Rota até o local</a>
 							 <a class="btn btn-default btn-xs pull-right"><i class="fa fa-calendar"></i> Mídia deste local</a>
 							 <a class="btn btn-default btn-xs pull-right"><i class="fa fa-film"></i> Eventos</a>
 						</h4>

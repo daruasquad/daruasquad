@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:daruasquad="daruasquad/facelets">
+
+<daruasquad:template-header></daruasquad:template-header>
+<body>
+	<div class="container">
+		<daruasquad:template-menu-top></daruasquad:template-menu-top>
+		<div class="searchContainer">
+			<form method="post" action="#{request.contextPath}/">
+				<input type="text" id="search" name="busca" class=" col-md-11 col-sm-11 col-xs-12" />
+				<button type="submit" onclick="this.parent.submit()"
+					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
+					<i class="fa fa-search fa-1x"></i>
+				</button>
+			</form>
+		</div>
+		<daruasquad:map-fullmap></daruasquad:map-fullmap>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				getMyPositionCenter();
+			});
+		</script>
+		<form method="post" action="##">
+			<div class="well">Clique no mapa para selecionar o local. Insira um nome e veja a mágica.</div>
+			<h5 class="inline-block">Nome do local:</h5> <input  />
+			<button onclick="validateForm()" class="btn btn-default btn-sm"><i class="fa fa-save"></i>  Inserir</button>
+		</form> 
+	</div>
+
+</body>
+<daruasquad:template-footer></daruasquad:template-footer>
+</html>
