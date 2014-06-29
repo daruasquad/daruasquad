@@ -31,15 +31,26 @@
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordion"
-							href="#collapseOne"> Collapsible Group Item #1 </a>
+							href="#collapseOne"> Locais </a>
 					</h4>
 				</div>
 				
 				<div id="collapseOne" class="panel-collapse collapse in">
-					<ui:repeat value="#{index.pesquisar()}" var="value">
-						<div class="panel-body">#{value.nome}</div>
+					<ui:repeat value="#{local.pesquisar()}" var="value">
+						
+						<div class="panel-body">
+							<div class="col-md-10 col-xs-12">
+								#{value.nome}
+							</div>
+							<div class="col-md-2 col-xs-12">
+								<button class="pull-right btn btn-sm"><i class="fa fa-search"></i> Ver detalhes</button>
+							</div>
+						
+						</div>
 						<script type="text/javascript">
-							Application.map.addMarker()
+							$(document).ready(function() {
+								addMarker(Math.random(), #{value.latitude}, #{value.longitude}, "#{value.nome}")
+							});
 						</script>
 					</ui:repeat>
 					
