@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:daruasquad="daruasquad/facelets"
-      >
-      
-      <daruasquad:template-header></daruasquad:template-header>
-      <body>
-      	<div class="container">
-      		<daruasquad:template-menu-top></daruasquad:template-menu-top>
-      		<div class="searchContainer">
-				<input type="text" id="search" class=" col-md-11 col-sm-11 col-xs-12"/>
-				<button type="button" class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12"><i class="fa fa-search fa-1x"></i></button>
-			</div>
-			<daruasquad:map-fullmap></daruasquad:map-fullmap>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:daruasquad="daruasquad/facelets">
+
+<daruasquad:template-header></daruasquad:template-header>
+<body>
+	<div class="container">
+		<daruasquad:template-menu-top></daruasquad:template-menu-top>
+		<div class="searchContainer">
+			<input type="text" id="search" class=" col-md-11 col-sm-11 col-xs-12" />
+			<button type="button"
+				class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
+				<i class="fa fa-search fa-1x"></i>
+			</button>
 		</div>
-		
+		<daruasquad:map-fullmap></daruasquad:map-fullmap>
+
+
 		<!-- >daruasquad:midia-pre-galery-struct></daruasquad:midia-pre-galery-struct -->
 		<!-- >daruasquad:midia-pos-galery-struct></daruasquad:midia-pos-galery-struct -->
-		
-      </body>
-      <daruasquad:template-footer></daruasquad:template-footer>
+
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne"> Collapsible Group Item #1 </a>
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in">
+					<div class="panel-body">Local structure</div>
+					<div class="panel-body">Local structure</div>
+					<div class="panel-body">Local structure</div>
+					<div class="panel-body">Local structure</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<daruasquad:template-footer></daruasquad:template-footer>
 </html>
