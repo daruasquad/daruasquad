@@ -13,6 +13,7 @@ public class Local {
 	private String pais;
 	private double latitude;
 	private double longitude;
+	private String usuarioInsersor;
 	
 	//Métodos Getter e Setter
 	public String getNome() {
@@ -63,6 +64,13 @@ public class Local {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
+	public String getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+	public void setUsuarioInsersor(String usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
+	}
+	
 	
 	
 }
