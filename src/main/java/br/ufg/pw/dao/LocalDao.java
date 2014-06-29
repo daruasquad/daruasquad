@@ -43,7 +43,7 @@ public class LocalDao {
 			pstmt.setString(6, local.getNome());
 			pstmt.setString(7, local.getUsuarioInsersor());
 			pstmt.setString(8, local.getBairro());
-			pstmt.setString(9, "POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )");
+			pstmt.setString(9, "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )");
 			
 			//Insere a informação do local dentro da transação
 			pstmt.executeUpdate();
@@ -82,7 +82,7 @@ public class LocalDao {
 	}
 	
 	/* Esse método retorna um array de locais que atendem os parâmetros da busca*/ 
-	public List<Local> buscar(String busca, Local cordenada) {
+	public List<Local> buscar(String busca, Local cordenada, int zoom) {
 		
 		String nova = busca.replace(" ", "%");
 		
@@ -98,7 +98,7 @@ public class LocalDao {
 											+ "join tipo_obstaculo_em_local toel on lo.id = toel.id_local"
 											+ "join modalidade_usa_tipo_obstaculo muto on toel.nome_tipo_obstaculo = muto.nome_tipo_obstaculo" 
 											+ "join esporte_tem_modalidade etm on muto.nome_modalidade = etm.nome_modalidade"
-											+ "where lo.cidade like %" + nova
+											+ "where (lo.cidade like %" + nova
 											+ "% or lo.estado like %" + nova 
 											+ "% or lo.pais like %" + nova 
 											+ "% or lo.nome like %" + nova 
@@ -106,7 +106,10 @@ public class LocalDao {
 											+ "% or toel.nome_tipo_obstaculo like %" + nova
 											+ "% or muto.nome_modalidade like %" + nova 
 											+ "% or etm.nome_esporte like %" + nova 
-											+ "% order by lo.id");
+											+ "%) "
+											+ " and ST_DWithin(lo.geoposicao, ST_GeographyFromText( " + funcaoSTGeography(cordenada) + " ), "
+											+ funcaoStGeographyZoom(zoom) 
+											+  ") order by lo.id");
 			
 			rs = pstmt.executeQuery();
 			
@@ -211,6 +214,25 @@ public class LocalDao {
 		}
 		
 		return local;
+	}
+	
+	private String funcaoSTGeography (Local local) {
+		return "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )";
+	}
+	
+	private String funcaoStGeographyZoom(int zoom) {
+		String raio = null;
+		
+		if(zoom == 11) raio = "35000";
+		else if (zoom == 12) raio = "17500";
+		else if (zoom == 13) raio = "8750";
+		else if (zoom == 14) raio = "4400";
+		else if (zoom == 15) raio = "2200";
+		else if (zoom == 17) raio = "550";
+		else if (zoom == 18) raio = "225";
+		else /*(zoom == 16)*/ raio = "1100";
+		
+		return raio;
 	}
 	
 }
