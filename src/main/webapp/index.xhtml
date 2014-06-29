@@ -11,18 +11,21 @@
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
 		<div class="searchContainer">
-			<input type="text" id="search" class=" col-md-11 col-sm-11 col-xs-12" />
-			<button type="button"
-				class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
-				<i class="fa fa-search fa-1x"></i>
-			</button>
+			<form method="post" action="#">
+				<input type="text" id="search" name="busca" class=" col-md-11 col-sm-11 col-xs-12" />
+				<input type="submit" value="submeter" />
+				<button type="button"
+					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
+					<i class="fa fa-search fa-1x"></i>
+				</button>
+			</form>
 		</div>
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
 
 
 		<!-- >daruasquad:midia-pre-galery-struct></daruasquad:midia-pre-galery-struct -->
 		<!-- >daruasquad:midia-pos-galery-struct></daruasquad:midia-pos-galery-struct -->
-
+	
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -31,11 +34,15 @@
 							href="#collapseOne"> Collapsible Group Item #1 </a>
 					</h4>
 				</div>
+				
 				<div id="collapseOne" class="panel-collapse collapse in">
-					<div class="panel-body">Local structure</div>
-					<div class="panel-body">Local structure</div>
-					<div class="panel-body">Local structure</div>
-					<div class="panel-body">Local structure</div>
+					<ui:repeat value="#{index.pesquisar()}" var="value">
+						<div class="panel-body">#{value.nome}</div>
+						<script type="text/javascript">
+							Application.map.addMarker()
+						</script>
+					</ui:repeat>
+					
 				</div>
 			</div>
 		</div>
