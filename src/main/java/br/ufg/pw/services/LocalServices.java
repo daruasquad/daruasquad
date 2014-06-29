@@ -3,7 +3,7 @@ package br.ufg.pw.services;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+//import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import br.ufg.pw.dao.LocalDao;
