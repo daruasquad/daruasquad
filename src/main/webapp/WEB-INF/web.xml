@@ -42,7 +42,7 @@
 	<welcome-file-list>
 		<!-- Ao informar no navegador o endereço da aplicação, localhost:9090/lab-jsf por exemplo, a página "index.html" será chamada.
 		Pode ser qualquer endereço dentro da própria aplkicação. -->
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
 
 </web-app>
