@@ -7,6 +7,7 @@ public class Local {
 	//Atríbutos da classe
 	private String nome;
 	private List<Obstaculo> obstaculos;
+	private String endereco;
 	private String bairro;
 	private String cidade;
 	private String estado;
@@ -14,6 +15,7 @@ public class Local {
 	private double latitude;
 	private double longitude;
 	private String usuarioInsersor;
+	private int id;
 	
 	//Métodos Getter e Setter
 	public String getNome() {
@@ -27,6 +29,12 @@ public class Local {
 	}
 	public void setObstaculos(List<Obstaculo> obstaculos) {
 		this.obstaculos = obstaculos;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 	public String getBairro() {
 		return bairro;
@@ -70,7 +78,11 @@ public class Local {
 	public void setUsuarioInsersor(String usuarioInsersor) {
 		this.usuarioInsersor = usuarioInsersor;
 	}
-	
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}	
 	
 }

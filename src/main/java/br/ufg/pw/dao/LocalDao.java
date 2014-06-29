@@ -11,9 +11,9 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import br.ufg.pw.entidades.Local;
-import br.ufg.pw.entidades.Obstaculo;
 import br.ufg.pw.utilitarios.JdbcUtil;
-
+/** 
+ * Classe de persistência das informações pertinentes à entidade Local */
 @ManagedBean
 @ApplicationScoped
 public class LocalDao {
@@ -22,8 +22,12 @@ public class LocalDao {
 	private PreparedStatement pstmt; //responsável pelas strings de consulta
 	private ResultSet rs; //result set da aplicação.
 	
-	
-	/* Método por inserir locais no Banco de dados da aplicação */
+	/** Método de inserção na aplicação de um local recebido do usuário 
+	 * @author brunokarpo
+	 * @param local: Objeto local passado pelo usuário do sistema 
+	 * @return void: Não retorna nada 
+	 * @exception SqlException: erro na inserção do obstáculo
+	 * @exception SqlException: erro geral na inserção do local*/
 	public void inserir(Local local) {
 		
 		try {
@@ -33,7 +37,7 @@ public class LocalDao {
 			conn.setAutoCommit(false); //Cria uma transação no Banco de Dados
 			
 			//Prepara o Statement para inserção
-			pstmt = conn.prepareStatement("insert into local (lat, lon, cidade, estado, pais, nome, login_usuario_insercao, bairro) values (?, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt = conn.prepareStatement("insert into local (lat, lon, cidade, estado, pais, nome, login_usuario_insercao, bairro, geoposicao, endereco) values (?, ?, ?, ?, ?, ?, ?, ?, ST_GeographyFromText( ? ), ?)");
 			
 			pstmt.setDouble(1, local.getLatitude());
 			pstmt.setDouble(2, local.getLongitude());
@@ -43,32 +47,30 @@ public class LocalDao {
 			pstmt.setString(6, local.getNome());
 			pstmt.setString(7, local.getUsuarioInsersor());
 			pstmt.setString(8, local.getBairro());
+			pstmt.setString(9, "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )");
+			pstmt.setString(10, local.getEndereco() );
 			
-			//Insere a informação do local dentro da transação
-			pstmt.executeUpdate();
+			pstmt.executeUpdate(); //Insere a informação do local dentro da transação
 			
-			//busca o ID da inserção no BD para inserir os tipos de obstáculos desse local
-			final int idLocal = buscarLocalEspecifico(local, conn, pstmt);
+			final int idLocal = buscarLocalEspecifico(local, conn, pstmt); //busca o ID do novo local no BD para inserir os tipos de obstáculos desse local;
 			
-			// se o id for diferente de -1
+			// se o id for diferente de -1 chama o método de ObstaculoDao para inserir os obstáculos no local
 			if(idLocal != -1) {
-				for(Obstaculo obs : local.getObstaculos()) {
-					pstmt = conn.prepareStatement("insert into tipo_obstaculo_em_local (id_local, nome_tipo_obstaculo) values (?, ?)");
-					pstmt.setInt(1, idLocal);
-					pstmt.setString(2, obs.getNome());
-					pstmt.executeUpdate();
-				}
-			} else {
-				new SQLException();
+				
+				ObstaculoDao obDao = new ObstaculoDao();
+				obDao.inserir(local.getObstaculos(), idLocal, conn, pstmt);
+				
 			}
 			
-			//Se deu tudo certo, commita e encerra
-			conn.commit();
+			conn.commit(); //Se deu tudo certo, commita no Banco e encerra
 			
 		} catch(Exception e) {
+			// Se der erro
 			try {
+				// Dá rollback e mostra o StackTrace do erro
 				conn.rollback();
 				e.printStackTrace();
+				
 			} catch (SQLException e1) {
 				// Ai não dá para fazer mais nada
 				e1.printStackTrace();
@@ -80,9 +82,16 @@ public class LocalDao {
 		}
 	}
 	
-	/* Esse método retorna um array de locais que atendem os parâmetros da busca*/
-	 
-	public List<Local> buscar(String busca) {
+	/** Esse método retorna um array de locais que atendem os parâmetros da busca 
+	 * @author brunokarpo
+	 * @param busca: String que o usuário deseja buscar
+	 * @param cordenada: Cordenada alvo da pesquisa
+	 * @param zoom: nível de Zoom do Mapa do usuário para definir o raio da busca
+	 * @return lista: um array de locais que atenderam a pesquisa 
+	 * @exception Exception: se der erro printa o StackTrace para tratarmos */
+	public List<Local> buscar(String busca, Local cordenada, int zoom) {
+		
+		String nova = busca.replace(" ", "%"); //Modifica cada espaço da string do usuário por um sinal %
 		
 		List<Local> lista = new ArrayList<Local>();
 		Local local = null;
@@ -91,19 +100,30 @@ public class LocalDao {
 			
 			conn = JdbcUtil.createConnection();
 			
-			pstmt = conn.prepareStatement("select * from local lo join tipo_obstaculo_em_local toel on lo.id = toel.id_local where lo.cidade like %" + busca + 
-					"%or lo.estado like %" + busca 
-					+ "%or lo.pais like %" + busca 
-					+ "%or lo.nome like %" + busca 
-					+ "%or lo.bairro like %" + busca 
-					+ "%or toel.nome_tipo_obstaculo like %" + busca + "%");
+			pstmt = conn.prepareStatement("select lo.lat, lo.lon, lo.cidade, lo.estado, lo.pais, lo.nome, lo.login_usuario_insercao, lo.bairro, lo.id toel.nome_tipo_obstaculo, muto.nome_modalidade, distinct lo.id "
+											+ "from local lo" 
+											+ "join tipo_obstaculo_em_local toel on lo.id = toel.id_local"
+											+ "join modalidade_usa_tipo_obstaculo muto on toel.nome_tipo_obstaculo = muto.nome_tipo_obstaculo" 
+											+ "join esporte_tem_modalidade etm on muto.nome_modalidade = etm.nome_modalidade"
+											+ "where (lo.cidade like %" + nova
+											+ "% or lo.estado like %" + nova 
+											+ "% or lo.pais like %" + nova 
+											+ "% or lo.nome like %" + nova 
+											+ "% or lo.bairro like %" + nova 
+											+ "% or toel.nome_tipo_obstaculo like %" + nova
+											+ "% or muto.nome_modalidade like %" + nova 
+											+ "% or etm.nome_esporte like %" + nova 
+											+ "%) "
+											+ " and ST_DWithin(lo.geoposicao, ST_GeographyFromText( " + funcaoSTGeography(cordenada) + " ), "
+											+ funcaoStGeographyZoom(zoom) 
+											+  ") order by lo.id");
 			
 			rs = pstmt.executeQuery();
 			
+			// Enquanto tivermos resultados no ResultSet, monta um objeto e adiciona na lista de locais
 			while( rs.next() ) {
 				local =	objetoLocal(rs);
 				lista.add(local);
-				
 			}
 			
 		} catch(Exception e) {
@@ -117,8 +137,42 @@ public class LocalDao {
 		return lista;
 	}
 	
+	/** Encontra um local específico através do ID passado pela aplicação na pesquisa
+	 * @author brunokarpo
+	 * @param id inteiro identificado no Banco de Dados
+	 * @return local Local específico buscado pelo sistema */
+	public Local buscar(int id) {
+		
+		Local local = null;
+		
+		try {
+			conn = JdbcUtil.createConnection();
+			
+			pstmt = conn.prepareStatement("select * from local where id = ?");
+			pstmt.setInt(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			local = objetoLocal(rs);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(conn, pstmt, rs);
+		}
+		
+		return local;
+	}
 	
-	/* Método criado para buscar o ID quando estamos inserindo um objeto recebido como parâmetro no método inserir*/
+	/** Método criado para buscar o ID quando estamos inserindo um objeto recebido como parâmetro no método inserir 
+	 * @author brunokarpo
+	 * @param local: informações do local que o usuário está inserindo
+	 * @param conn : conexão já aberta com o banco de dados da transação da inserção 
+	 * @param pstmt : Statement de pesquisa da conexão já aberta no Banco de Dados 
+	 * @return id : Identificador do lugar recentemente inserido */
 	private int buscarLocalEspecifico(Local local, Connection conn, PreparedStatement pstmt) {
 		
 		int id = 0;
@@ -147,7 +201,10 @@ public class LocalDao {
 		return id;
 	}
 	
-	/* Esse método faz a montagem de um objeto Local à partir de um ponteiro de um result set recebido */
+	/** Esse método faz a montagem de um objeto Local à partir de um ponteiro de um result set recebido
+	 * @author brunokarpo
+	 * @param rs : Ponteiro apontando para um atual resultado de um result set
+	 * @return local : uma instância de objeto local */
 	protected Local objetoLocal(ResultSet rs) {
 		
 		Local local = new Local(); 
@@ -162,6 +219,7 @@ public class LocalDao {
 			local.setNome( rs.getString("nome") );
 			local.setUsuarioInsersor( rs.getString("login_usuario_insercao") );
 			local.setBairro( rs.getString("bairro") );
+			local.setId( rs.getInt("id" ));
 			
 			// Instancia um objeto de ObstaculoDao para montar o array de obstaculos
 			ObstaculoDao obs = new ObstaculoDao();
@@ -175,6 +233,33 @@ public class LocalDao {
 		}
 		
 		return local;
+	}
+	
+	/** Método que auxilia na passagem de pontos geográficos para as Function do Postgis 
+	 * @author brunokarpo
+	 * @param local: uma cordenada de um local
+	 * @return String contendo o SRID (formato da cordenada) mais uma string do Ponto geografico alvo */
+	private String funcaoSTGeography (Local local) {
+		return "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )";
+	}
+	
+	/** Método que retorna o raio de busca das pesquisas na aplicação em metros 
+	 * @author brunokarpo
+	 * @param zoom inteiro com o nível de zoom do mapa do Google
+	 * @return String contendo o valor do raio da pesquisa em metros */
+	private String funcaoStGeographyZoom(int zoom) {
+		String raio = null;
+		
+		if(zoom == 11) raio = "35000";
+		else if (zoom == 12) raio = "17500";
+		else if (zoom == 13) raio = "8750";
+		else if (zoom == 14) raio = "4400";
+		else if (zoom == 15) raio = "2200";
+		else if (zoom == 17) raio = "550";
+		else if (zoom == 18) raio = "225";
+		else /*(zoom == 16)*/ raio = "1100";
+		
+		return raio;
 	}
 	
 }

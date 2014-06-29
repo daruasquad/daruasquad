@@ -11,7 +11,7 @@ import br.ufg.pw.utilitarios.JdbcUtil;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-
+/** Classe responsável pela persistência das informações pertinentes aos Obstáculos presente nos locais */
 @ManagedBean
 @ApplicationScoped
 public class ObstaculoDao {
@@ -20,7 +20,11 @@ public class ObstaculoDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public List<Obstaculo> buscar(int idLocal) {
+	/** Método que lista os obstáculos presentes em um local
+	 * @author brunokarpo
+	 * @param idLocal inteiro que identifica o local no Banco
+	 * @return lista de objetos obstáculos pertinentes àquele local */
+	protected List<Obstaculo> buscar(int idLocal) {
 		
 		List<Obstaculo> lista = new ArrayList<Obstaculo>();
 		Obstaculo obs = null;
@@ -53,6 +57,28 @@ public class ObstaculoDao {
 		return lista;
 	}
 	
+	/** Método responsável por receber uma lista de obstáculos e inserir no banco usando uma transação corrente
+	 * @author brunokarpo
+	 * @param obstaculos : lista de obstáculos a serem inseridos
+	 * @param idLocal : identificador do local no Banco de Dados
+	 * @param conn : Conexão já aberta com o banco de dados dentro de uma transação
+	 * @param pstmt : Statement já aberto da transação da conexão
+	 * @return void
+	 * @exception Retorna uma exceção a ser tratada*/
+	protected void inserir(List<Obstaculo> obstaculos, int idLocal, Connection conn, PreparedStatement pstmt) {
+		
+		try {
+			for(Obstaculo obs : obstaculos) { //Insere cada obstáculo do array no Banco de Dados referenciando o local
+				pstmt = conn.prepareStatement("insert into tipo_obstaculo_em_local (id_local, nome_tipo_obstaculo) values (?, ?)");
+				pstmt.setInt(1, idLocal);
+				pstmt.setString(2, obs.getNome());
+				pstmt.executeUpdate();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
 	
 	
 }
