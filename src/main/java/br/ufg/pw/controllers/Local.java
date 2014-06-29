@@ -16,7 +16,7 @@ import br.ufg.pw.services.LocalServices;
 
 @ManagedBean
 @RequestScoped
-public class Index {
+public class Local {
 	
 	private List<Local> searchResult = new ArrayList<Local> () ;
 	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -34,12 +34,30 @@ public class Index {
 		
 		System.out.println(busca);
 		searchResult = localService.pesquisar(busca/*, lat, lon*/);
-		genFakeResult() ;
+		genFakeResultMult() ;
+		return searchResult;
+	}
+	
+	public List<Local> pesquisarId(Integer id) {
+		LocalServices localService = new LocalServices();		
+		String busca = parameters.get("id");
+		///searchResult = localService.pesquisarId(busca/*, lat, lon*/);
+		genFakeResultId();
 		return searchResult;
 	}
 	
 	
-	private void genFakeResult() {
+	
+	private void genFakeResultId() {
+		searchResult = new ArrayList<Local> ();
+		Local l1 = new Local();
+		l1.setNome("Local 1");
+		l1.setLatitude(-16.671128);
+		l1.setLongitude(-49.282724);
+		searchResult.add(l1);
+	}
+	
+	private void genFakeResultMult() {
 		searchResult = new ArrayList<Local> ();
 				
 		Local l1 = new Local();
@@ -49,23 +67,19 @@ public class Index {
 		
 		l1.setNome("Local 1");
 		l2.setNome("Local 2");
-		l3.setNome("Local 3");
+		l3.setNome("Local 3 tem um nome até grande demais para ser o nome de algum lugar real");
 		l4.setNome("Local 4");
 		
-		l1.setNome("Local 1");
-		l2.setNome("Local 2");
-		l3.setNome("Local 3");
-		l4.setNome("Local 4");
 		
-		l1.setLatitude(11);
-		l2.setLatitude(12);
-		l3.setLatitude(13);
-		l4.setLatitude(14);
+		l1.setLatitude(-16.671128);
+		l2.setLatitude(-16.669813);
+		l3.setLatitude(-16.679186);
+		l4.setLatitude(-16.699000);
 		
-		l1.setLongitude(21);
-		l2.setLongitude(22);
-		l3.setLongitude(22);
-		l4.setLongitude(22);
+		l1.setLongitude(-49.282724);
+		l2.setLongitude(-49.253627);
+		l3.setLongitude(-49.224960);
+		l4.setLongitude(-49.244443);
 		
 		
 		searchResult.add(l1);
