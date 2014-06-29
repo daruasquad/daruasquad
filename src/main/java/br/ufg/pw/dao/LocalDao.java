@@ -33,7 +33,7 @@ public class LocalDao {
 			conn.setAutoCommit(false); //Cria uma transação no Banco de Dados
 			
 			//Prepara o Statement para inserção
-			pstmt = conn.prepareStatement("insert into local (lat, lon, cidade, estado, pais, nome, login_usuario_insercao, bairro) values (?, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt = conn.prepareStatement("insert into local (lat, lon, cidade, estado, pais, nome, login_usuario_insercao, bairro, geoposicao) values (?, ?, ?, ?, ?, ?, ?, ?, ST_GeographyFromText( ? ))");
 			
 			pstmt.setDouble(1, local.getLatitude());
 			pstmt.setDouble(2, local.getLongitude());
@@ -43,6 +43,7 @@ public class LocalDao {
 			pstmt.setString(6, local.getNome());
 			pstmt.setString(7, local.getUsuarioInsersor());
 			pstmt.setString(8, local.getBairro());
+			pstmt.setString(9, "POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )");
 			
 			//Insere a informação do local dentro da transação
 			pstmt.executeUpdate();
@@ -80,9 +81,10 @@ public class LocalDao {
 		}
 	}
 	
-	/* Esse método retorna um array de locais que atendem os parâmetros da busca*/
-	 
-	public List<Local> buscar(String busca) {
+	/* Esse método retorna um array de locais que atendem os parâmetros da busca*/ 
+	public List<Local> buscar(String busca, Local cordenada) {
+		
+		String nova = busca.replace(" ", "%");
 		
 		List<Local> lista = new ArrayList<Local>();
 		Local local = null;
@@ -91,12 +93,20 @@ public class LocalDao {
 			
 			conn = JdbcUtil.createConnection();
 			
-			pstmt = conn.prepareStatement("select * from local lo join tipo_obstaculo_em_local toel on lo.id = toel.id_local where lo.cidade like %" + busca + 
-					"%or lo.estado like %" + busca 
-					+ "%or lo.pais like %" + busca 
-					+ "%or lo.nome like %" + busca 
-					+ "%or lo.bairro like %" + busca 
-					+ "%or toel.nome_tipo_obstaculo like %" + busca + "%");
+			pstmt = conn.prepareStatement("select lo.lat, lo.lon, lo.cidade, lo.estado, lo.pais, lo.nome, lo.login_usuario_insercao, lo.bairro, toel.nome_tipo_obstaculo, muto.nome_modalidade, distinct lo.id "
+											+ "from local lo" 
+											+ "join tipo_obstaculo_em_local toel on lo.id = toel.id_local"
+											+ "join modalidade_usa_tipo_obstaculo muto on toel.nome_tipo_obstaculo = muto.nome_tipo_obstaculo" 
+											+ "join esporte_tem_modalidade etm on muto.nome_modalidade = etm.nome_modalidade"
+											+ "where lo.cidade like %" + nova
+											+ "% or lo.estado like %" + nova 
+											+ "% or lo.pais like %" + nova 
+											+ "% or lo.nome like %" + nova 
+											+ "% or lo.bairro like %" + nova 
+											+ "% or toel.nome_tipo_obstaculo like %" + nova
+											+ "% or muto.nome_modalidade like %" + nova 
+											+ "% or etm.nome_esporte like %" + nova 
+											+ "% order by lo.id");
 			
 			rs = pstmt.executeQuery();
 			
@@ -115,6 +125,32 @@ public class LocalDao {
 		}
 		
 		return lista;
+	}
+	
+	public Local buscar(int id) {
+		
+		Local local = null;
+		
+		try {
+			conn = JdbcUtil.createConnection();
+			
+			pstmt = conn.prepareStatement("select * from local where id = ?");
+			pstmt.setInt(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			local = objetoLocal(rs);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(conn, pstmt, rs);
+		}
+		
+		return local;
 	}
 	
 	
