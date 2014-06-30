@@ -21,32 +21,52 @@ public class LocalController {
 	
 	private List<Local> searchResult = new ArrayList<Local> () ;
 	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	private LocalServices localService = new LocalServices();
+	private Local localForm = new Local();
 	
 	public List<Local> getSearchResult() {
 		return searchResult;
 	}
 	
+	public Local getLocalForm() {
+		return localForm;
+	}
+	
+	/** Pesquisa genérica, usada para carregar a lista inicial e os resultados da busca 
+	 * @return ArrayList<Local> lista de locais
+	 * */
 	public List<Local> pesquisar() {
-		LocalServices localService = new LocalServices();
 		
 		String busca = parameters.get("busca");
 		//Double lat = Double.parseDouble(parameters.get("lat"));
 		//Double lon = Double.parseDouble(parameters.get("lon"));
 		
 		System.out.println(busca);
-		searchResult = localService.pesquisar(busca/*, lat, lon*/);
+		//searchResult = localService.pesquisar(busca/*, lat, lon*/);
 		genFakeResultMult() ;
 		return searchResult;
 	}
 	
+	/** 
+	 * Pesquisa por um local específico, utilizando seu id
+	 * @param Integer id
+	 * @return ArrayList<Local> lista de locais
+	 * */
 	public List<Local> pesquisarId(Integer id) {
-		LocalServices localService = new LocalServices();		
 		String busca = parameters.get("id");
 		//searchResult = localService.pesquisarId(busca/*, lat, lon*/);
 		genFakeResultId();
 		return searchResult;
 	}
 	
+	/** Realiza a inserção de um local
+	 * @param Local montado com os dados definidos pelo usuário no formulário
+	 *  */
+	public String inserir() {
+		System.out.println(localForm.getNome());
+		//localService.inserir(localForm);
+		return "";
+	}
 	
 	
 	private void genFakeResultId() {

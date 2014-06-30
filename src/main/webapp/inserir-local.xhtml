@@ -27,17 +27,34 @@
 				Application.map.setZoom(12);
 			});
 		</script>
-		<form method="post" action="##">
+		<h:form method="post" action="##">
 			<div class="well">Clique no mapa para selecionar o local. Insira um nome e veja a mágica.</div>
 			<b><address id="formAddress"></address></b>
-			<h5 class="inline-block">Nome do local:</h5> <input  />
+			<h5 class="inline-block">Nome do local:</h5> 
+			<h:inputText value="#{local.localForm.nome}"></h:inputText>
+			
+			<h:inputHidden value="#{local.localForm.endereco}" id="rua"/>
+			<h:inputHidden value="#{local.localForm.bairro}" id="bairro"/>
+			<h:inputHidden value="#{local.localForm.cidade}" id="cidade" />
+			<h:inputHidden value="#{local.localForm.estado}" id="estado" />
+			<h:inputHidden value="#{local.localForm.pais}" id="pais"/>
+			<h:inputHidden value="#{local.localForm.usuarioInsersor}" id="usuarioInsersor"/>
+			
+			<h:inputHidden value="#{local.localForm.latitude}" id="latitude"/>
+			<h:inputHidden value="#{local.localForm.longitude}" id="longitude"/>
+			
+			
+			<!-- 
 			<input type="hidden" name="rua" id="rua" />
 			<input type="hidden" name="bairro" id="bairro" />
 			<input type="hidden" name="cidade" id="cidade" />
 			<input type="hidden" name="estado" id="estado" />
 			<input type="hidden" name="pais" id="pais" />
-			<button onclick="validateForm()" class="btn btn-default btn-sm"><i class="fa fa-save"></i>  Inserir</button>
-		</form> 
+			 -->
+			 
+			 <h:commandButton value="Ok" action="#{local.inserir}"  class="btn btn-default btn-sm"><i class="fa fa-save"></i>  Inserir</h:commandButton>
+			 
+		</h:form> 
 	</div>
 
 </body>

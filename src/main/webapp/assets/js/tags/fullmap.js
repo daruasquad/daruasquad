@@ -70,8 +70,13 @@ function centerMapHere(position) {
 function insertLocalMapEvents() {
 	google.maps.event.addListener(Application.map, 'click', function(event) {
 		clearMarkers();
-		addMarker(null, event.latLng.lat(),  event.latLng.lng(), "New place");
-		getAdressGeocode(event.latLng.lat(), event.latLng.lng(), fillInsertFormAdress);
+		var lat = event.latLng.lat();
+		var lng = event.latLng.lng();
+		
+		addMarker(null, lat,  lng, "New place");
+		getAdressGeocode(lat, lng, fillInsertFormAdress);
+		$("[id$=latitude]").val(lat);
+		$("[id$=longitude]").val(lng);
 	});
 }
 
@@ -91,11 +96,11 @@ function fillInsertFormAdress(data) {
 	var estado 	= 	extractGeocodeInfo("administrative_area_level_1", data);
 	var pais 	=	extractGeocodeInfo("country", data);
 	
-	$("#rua").val(rua.long_name);
-	$("#bairro").val(bairro.long_name);
-	$("#cidade").val(cidade.long_name);
-	$("#estado").val(estado.long_name);
-	$("#pais").val(pais.long_name);
+	$("[id$=rua]").val(rua.long_name);
+	$("[id$=bairro]").val(bairro.long_name);
+	$("[id$=cidade]").val(cidade.long_name);
+	$("[id$=estado]").val(estado.long_name);
+	$("[id$=pais]").val(pais.long_name);
 	
 	$("#formAddress").html(formatedAddress);
 }
