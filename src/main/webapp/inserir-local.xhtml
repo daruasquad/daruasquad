@@ -11,14 +11,12 @@
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
 		<div class="searchContainer">
-			<form method="post" action="#{request.contextPath}/">
-				<input type="text" id="search" name="busca"
-					class=" col-md-11 col-sm-11 col-xs-12" />
-				<button type="submit" onclick="this.parent.submit()"
-					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
-					<i class="fa fa-search fa-1x"></i>
-				</button>
-			</form>
+			<h:form method="post">
+				
+				<h:inputText  type="text" value="#{local.busca}" id="busca" name="busca" class=" col-md-11 col-sm-11 col-xs-12"  />
+				<h:commandButton  value="Buscar" action="#{local.pesquisarForm}" class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12"></h:commandButton>
+				
+			</h:form>
 		</div>
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
 		<script type="text/javascript">

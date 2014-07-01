@@ -23,6 +23,7 @@ public class LocalController {
 	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 	private LocalServices localService = new LocalServices();
 	private Local localForm = new Local();
+	private String busca ;
 	
 	
 	public List<Local> getSearchResult() {
@@ -33,19 +34,39 @@ public class LocalController {
 		return localForm;
 	}
 	
+	public void setBusca(String b){
+		busca = b;
+	}
+	
+	public String getBusca() {
+		return busca;
+	}
+	
 	/** Pesquisa genérica, usada para carregar a lista inicial e os resultados da busca 
 	 * @return ArrayList<Local> lista de locais
 	 * */
 	public List<Local> pesquisar() {
 		
-		String busca = parameters.get("busca");
+		//String busca = parameters.get("busca");
 		//Double lat = Double.parseDouble(parameters.get("lat"));
 		//Double lon = Double.parseDouble(parameters.get("lon"));
 		
-		System.out.println(busca);
-		//searchResult = localService.pesquisar(busca/*, lat, lon*/);
-		genFakeResultMult() ;
+		Local coordLocal = new Local();
+		coordLocal.setLatitude(-16.671128);
+		coordLocal.setLongitude(-49.282724);
+		
+		if (busca == null) {
+			busca = "";
+		}
+		
+		searchResult = localService.pesquisar(busca, coordLocal, 11);
+		//genFakeResultMult() ;
 		return searchResult;
+	}
+	
+	public String pesquisarForm() {
+		pesquisar();
+		return "";
 	}
 	
 	/** 
@@ -53,10 +74,12 @@ public class LocalController {
 	 * @param Integer id
 	 * @return ArrayList<Local> lista de locais
 	 * */
-	public List<Local> pesquisarId(Integer id) {
-		String busca = parameters.get("id");
-		//searchResult = localService.pesquisarId(busca/*, lat, lon*/);
-		genFakeResultId();
+	public List<Local> pesquisarId() {
+		int busca = Integer.parseInt(parameters.get("id"));
+		searchResult = new ArrayList<Local>();
+		Local pesquisa = localService.pesquisar(busca/*, lat, lon*/);
+		searchResult.add(pesquisa);
+		//genFakeResultId();
 		return searchResult;
 	}
 	

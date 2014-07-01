@@ -11,17 +11,16 @@
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
 		<div class="searchContainer">
-			<form method="post" action="#">
-				<input type="text" id="search" name="busca" class=" col-md-11 col-sm-11 col-xs-12" />
-				<button type="submit" onclick="this.parent.submit()"
-					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
-					<i class="fa fa-search fa-1x"></i>
-				</button>
-			</form>
+			<h:form method="post">
+				
+				<h:inputText  type="text" value="#{local.busca}" id="busca" name="busca" class=" col-md-11 col-sm-11 col-xs-12"  />
+				<h:commandButton  value="Buscar" action="#{local.pesquisarForm}" class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12"></h:commandButton>
+				
+			</h:form>
 		</div>
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
 		
-		<ui:repeat value="#{local.pesquisarId(12)}" var="value">
+		<ui:repeat value="#{local.pesquisarId()}" var="value">
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -38,11 +37,8 @@
 							<div class="col-md-12">
 								<h5 class="inline-block">Obstáculos:</h5>
 								<ui:repeat  value="#{value.obstaculos}" var="obs">
-									<div>
-										#{obs.nome}
-									</div>
+									<div class="inline-block well well-sm">#{obs.nome}</div>
 								</ui:repeat>
-								#{value.obstaculos}
 							</div>
 							<div class="col-md-12">
 								<h5 class="inline-block">Endereço:</h5> #{value.bairro}, #{value.cidade} -#{value.estado}, #{value.pais} 
