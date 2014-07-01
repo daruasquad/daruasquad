@@ -94,11 +94,11 @@ public class LocalController {
 		Obstaculo rampa = new Obstaculo();
 		rampa.setNome("Rampa");
 		Obstaculo corrimao = new Obstaculo();
-		rampa.setNome("Corrimão");
+		corrimao.setNome("Corrimão");
 		Obstaculo nope = new Obstaculo();
-		rampa.setNome("Nope");
+		nope.setNome("Nope");
 		Obstaculo zip = new Obstaculo();
-		rampa.setNome("Zip");
+		zip.setNome("Zip");
 		
 		obs.add(rampa);
 		obs.add(corrimao);
