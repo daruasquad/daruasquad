@@ -19,7 +19,7 @@ import br.ufg.pw.entidades.Local;
 public class LocalServices {
 	
 	@ManagedProperty(value="#{localDao}")
-	private LocalDao localDao;
+	private LocalDao localDao = new LocalDao();
 	
 	/** Manda o objeto para a classe DAO de local para persistência da informação 
 	 * @author brunokarpo
