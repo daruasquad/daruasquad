@@ -100,21 +100,22 @@ public class LocalDao {
 			
 			conn = JdbcUtil.createConnection();
 			
-			pstmt = conn.prepareStatement("select lo.lat, lo.lon, lo.cidade, lo.estado, lo.pais, lo.nome, lo.login_usuario_insercao, lo.bairro, lo.id toel.nome_tipo_obstaculo, muto.nome_modalidade, distinct lo.id "
-											+ "from local lo" 
-											+ "join tipo_obstaculo_em_local toel on lo.id = toel.id_local"
-											+ "join modalidade_usa_tipo_obstaculo muto on toel.nome_tipo_obstaculo = muto.nome_tipo_obstaculo" 
-											+ "join esporte_tem_modalidade etm on muto.nome_modalidade = etm.nome_modalidade"
-											+ "where (lo.cidade like %" + nova
-											+ "% or lo.estado like %" + nova 
-											+ "% or lo.pais like %" + nova 
-											+ "% or lo.nome like %" + nova 
-											+ "% or lo.bairro like %" + nova 
-											+ "% or toel.nome_tipo_obstaculo like %" + nova
-											+ "% or muto.nome_modalidade like %" + nova 
-											+ "% or etm.nome_esporte like %" + nova 
-											+ "%) "
-											+ " and ST_DWithin(lo.geoposicao, ST_GeographyFromText( " + funcaoSTGeography(cordenada) + " ), "
+			pstmt = conn.prepareStatement("select  distinct (lo.id) id, lo.lat, lo.lon, lo.cidade, lo.estado, lo.pais, lo.nome, "
+											+ " lo.login_usuario_insercao, lo.bairro, lo.id, toel.nome_tipo_obstaculo, muto.nome_modalidade "
+											+ " from local lo " 
+											+ " join tipo_obstaculo_em_local toel on lo.id = toel.id_local "
+											+ " join modalidade_usa_tipo_obstaculo muto on toel.nome_tipo_obstaculo = muto.nome_tipo_obstaculo " 
+											+ " join esporte_tem_modalidade etm on muto.nome_modalidade = etm.nome_modalidade "
+											+ " where (lo.cidade ilike '%" + nova + "%'"
+											+ " or lo.estado ilike '%" + nova  + "%'"
+											+ " or lo.pais ilike '%" + nova  + "%'"
+											+ " or lo.nome ilike '%" + nova  + "%'"
+											+ " or lo.bairro ilike '%" + nova  + "%'"
+											+ " or toel.nome_tipo_obstaculo ilike '%" + nova  + "%'"
+											+ " or muto.nome_modalidade ilike '%" + nova  + "%'"
+											+ " or etm.nome_esporte ilike '%" + nova  + "%'"
+											+ ") "
+											+ " and ST_DWithin(lo.geoposicao, ST_GeographyFromText(' " + funcaoSTGeography(cordenada) + " '), "
 											+ funcaoStGeographyZoom(zoom) 
 											+  ") order by lo.id");
 			
