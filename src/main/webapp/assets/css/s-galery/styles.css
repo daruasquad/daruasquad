@@ -51,10 +51,10 @@
   pointer-events: none;
   -webkit-transition: opacity .3s ease;
   transition: opacity .3s ease;
-  position: absolute;
+  /*position: absolute;
   bottom: 0;
   left: 0;
-  right: 0
+  right: 0*/
 }
 
 .control,
@@ -89,7 +89,7 @@
   display:inline-block;
   width: 20px;
   height: 20px;
-  background-image: url(../images/controls-light2.png);
+  background-image: url(../../img/s-galery/controls-light2.png);
   background-repeat: no-repeat
 }
 

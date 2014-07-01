@@ -44,6 +44,11 @@
 						<div class="panel-body">
 							<div class="col-md-10 col-xs-12">
 								#{value.nome}
+								
+								<ui:repeat value="#{value.obstaculos}" var="obs">
+								<small>#{obs.nome}</small>
+								</ui:repeat>
+								
 							</div>
 							<div class="col-md-2 col-xs-12">
 								<a class="pull-right btn btn-default btn-sm" href="local-details.xhtml?id=12"><i class="fa fa-search"></i> Ver detalhes</a>
@@ -52,7 +57,7 @@
 						</div>
 						<script type="text/javascript">
 							$(document).ready(function() {
-								addMarker(Math.random(), #{value.latitude}, #{value.longitude}, "#{value.nome}")
+								addMarker(#{value.id}, #{value.latitude}, #{value.longitude}, "#{value.nome}")
 							});
 						</script>
 					</ui:repeat>

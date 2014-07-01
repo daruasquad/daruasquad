@@ -12,7 +12,8 @@
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
 		<div class="searchContainer">
 			<form method="post" action="#{request.contextPath}/">
-				<input type="text" id="search" name="busca" class=" col-md-11 col-sm-11 col-xs-12" />
+				<input type="text" id="search" name="busca"
+					class=" col-md-11 col-sm-11 col-xs-12" />
 				<button type="submit" onclick="this.parent.submit()"
 					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
 					<i class="fa fa-search fa-1x"></i>
@@ -28,22 +29,24 @@
 			});
 		</script>
 		<h:form method="post" action="##">
-			<div class="well">Clique no mapa para selecionar o local. Insira um nome e veja a mágica.</div>
+			<div class="well">Clique no mapa para selecionar o local.
+				Insira um nome e veja a mágica.</div>
 			<b><address id="formAddress"></address></b>
-			<h5 class="inline-block">Nome do local:</h5> 
-			<h:inputText value="#{local.localForm.nome}"></h:inputText>
-			
-			<h:inputHidden value="#{local.localForm.endereco}" id="rua"/>
-			<h:inputHidden value="#{local.localForm.bairro}" id="bairro"/>
+			<h5 class="inline-block col-md-2">Nome do local:</h5>
+			<h:inputText value="#{local.localForm.nome}" class="col-md-8" />
+
+			<h:inputHidden value="#{local.localForm.endereco}" id="rua" />
+			<h:inputHidden value="#{local.localForm.bairro}" id="bairro" />
 			<h:inputHidden value="#{local.localForm.cidade}" id="cidade" />
 			<h:inputHidden value="#{local.localForm.estado}" id="estado" />
-			<h:inputHidden value="#{local.localForm.pais}" id="pais"/>
-			<h:inputHidden value="#{local.localForm.usuarioInsersor}" id="usuarioInsersor"/>
-			
-			<h:inputHidden value="#{local.localForm.latitude}" id="latitude"/>
-			<h:inputHidden value="#{local.localForm.longitude}" id="longitude"/>
-			
-			
+			<h:inputHidden value="#{local.localForm.pais}" id="pais" />
+			<h:inputHidden value="#{local.localForm.usuarioInsersor}"
+				id="usuarioInsersor" />
+
+			<h:inputHidden value="#{local.localForm.latitude}" id="latitude" />
+			<h:inputHidden value="#{local.localForm.longitude}" id="longitude" />
+
+
 			<!-- 
 			<input type="hidden" name="rua" id="rua" />
 			<input type="hidden" name="bairro" id="bairro" />
@@ -51,10 +54,11 @@
 			<input type="hidden" name="estado" id="estado" />
 			<input type="hidden" name="pais" id="pais" />
 			 -->
-			 
-			 <h:commandButton value="Ok" action="#{local.inserir}"  class="btn btn-default btn-sm"><i class="fa fa-save"></i>  Inserir</h:commandButton>
-			 
-		</h:form> 
+
+			<h:commandButton value="Inserir" action="#{local.inserir}"
+				class="btn btn-default btn-sm" />
+
+		</h:form>
 	</div>
 
 </body>

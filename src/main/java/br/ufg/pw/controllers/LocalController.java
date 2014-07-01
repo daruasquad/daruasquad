@@ -24,6 +24,7 @@ public class LocalController {
 	private LocalServices localService = new LocalServices();
 	private Local localForm = new Local();
 	
+	
 	public List<Local> getSearchResult() {
 		return searchResult;
 	}
@@ -72,6 +73,7 @@ public class LocalController {
 	private void genFakeResultId() {
 		searchResult = new ArrayList<Local> ();
 		Local l1 = new Local();
+		l1.setId(19);
 		l1.setNome("Local 1");
 		l1.setLatitude(-16.671128);
 		l1.setLongitude(-49.282724);
@@ -113,6 +115,13 @@ public class LocalController {
 		Local l2 = new Local();
 		Local l3 = new Local();
 		Local l4 = new Local();
+		
+		
+		l1.setId(12);
+		l2.setId(13);
+		l3.setId(14);
+		l4.setId(15);
+		
 		
 		l1.setNome("Local 1");
 		l2.setNome("Local 2");

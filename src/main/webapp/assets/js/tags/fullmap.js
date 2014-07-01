@@ -102,7 +102,7 @@ function fillInsertFormAdress(data) {
 	$("[id$=estado]").val(estado.long_name);
 	$("[id$=pais]").val(pais.long_name);
 	
-	$("#formAddress").html(formatedAddress);
+	$("#formAddress").html("O local será criado em " + formatedAddress);
 }
 
 
