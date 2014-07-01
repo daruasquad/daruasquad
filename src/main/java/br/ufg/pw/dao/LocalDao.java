@@ -100,7 +100,7 @@ public class LocalDao {
 			
 			conn = JdbcUtil.createConnection();
 			
-			pstmt = conn.prepareStatement("select  distinct (lo.id) id, lo.lat, lo.lon, lo.cidade, lo.estado, lo.pais, lo.nome, "
+			pstmt = conn.prepareStatement("select  distinct on (lo.id) id, lo.lat, lo.lon, lo.cidade, lo.estado, lo.pais, lo.nome, "
 											+ " lo.login_usuario_insercao, lo.bairro, lo.id, toel.nome_tipo_obstaculo, muto.nome_modalidade "
 											+ " from local lo " 
 											+ " join tipo_obstaculo_em_local toel on lo.id = toel.id_local "
