@@ -47,14 +47,14 @@
 			<input type="hidden" name="pais" id="pais" />
 			 -->
 			 
-			 <h:selectManyCheckbox value="#{local.obsForm}">
+			
+			 
+				 <ui:repeat value="#{local.obsService.obsDefault}" var="obsDefault">
+				 <h:selectManyCheckbox value="{local.obsForm}" id="obstaculos">
+				 	<f:selectItem  itemLabel="#{obsDefault.nome}" itemValue="#{obsDefault.nome}" />
+				 </h:selectManyCheckbox> 
+				 </ui:repeat>
 			 	
-			 	<ui:repeat var="#{obstaculo.getAllObstaculos()}" value="obsDefault">
-			 		#{obsDefault.nome}
-			 		<f:selectItem itemValue="#{obsDefault.nome}" itemLabel="#{obsDefault.nome}" />
-			 	</ui:repeat>
-			 	#{obsFormDefault}
-			</h:selectManyCheckbox>
 
 			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />
 

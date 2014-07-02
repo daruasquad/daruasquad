@@ -34,14 +34,17 @@ public class LocalController {
 	/** Propriedades do mapa apresentado ao usuário */
 	//@ManagedProperty(value="#{map}")
 	private MapController map;
-		
-
+	
 	/** Propriedade aluno para opearções da controller*/
-	private Local local;
+	private Local localForm = new Local();
+	
+	
 	
 	/** Busca textual realizada no front-end */
 	private String busca;
 	
+	/**Obstáculos selecionados no formulário de busca */
+	private String[] obsForm;
 	
 	public Double defaultLat 	= -16.671128;
 	public Double defaultLon 	= -49.282724;
@@ -69,11 +72,11 @@ public class LocalController {
 //		return map;
 //	}
 	
-	public Local getLocal() {
-		return local;
+	public Local getLocalForm() {
+		return localForm;
 	}
-	public void setLocal(Local local) {
-		this.local = local;
+	public void setLocalForm(Local local) {
+		this.localForm = local;
 	}
 
 	
@@ -130,6 +133,18 @@ public class LocalController {
 		list.add(localService.pesquisar(busca));
 		return list;
 	}
+	
+	
+
+	/** Realiza a inserção de um local
+	 * @param Local montado com os dados definidos pelo usuário no formulário
+	 *  */
+	public String inserir() {
+		localForm.setUsuarioInsersor("user1");
+		localService.inserir(localForm);
+		return "";
+	}
+
 	
 	/** Seta a string para a busca textual 
 	 * @param String s 	String sendo buscada
