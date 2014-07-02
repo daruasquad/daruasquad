@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:daruasquad="daruasquad/facelets">
 
 <daruasquad:template-header></daruasquad:template-header>
@@ -24,7 +25,7 @@
 				Insira um nome e veja a mágica.</div>
 			<b><address id="formAddress"></address></b>
 			<h5 class="inline-block col-md-2">Nome do local:</h5>
-			<h:inputText value="#{local.localForm.nome}" class="col-md-8" />
+			<h:inputText value="#{local.localForm.nome}" class="col-md-8" name="nome" id="nome" />
 
 			<h:inputHidden value="#{local.localForm.endereco}" id="rua" />
 			<h:inputHidden value="#{local.localForm.bairro}" id="bairro" />
@@ -45,9 +46,17 @@
 			<input type="hidden" name="estado" id="estado" />
 			<input type="hidden" name="pais" id="pais" />
 			 -->
+			 
+			 <h:selectManyCheckbox value="#{local.obsForm}">
+			 	
+			 	<ui:repeat var="#{obstaculo.getAllObstaculos()}" value="obsDefault">
+			 		#{obsDefault.nome}
+			 		<f:selectItem itemValue="#{obsDefault.nome}" itemLabel="#{obsDefault.nome}" />
+			 	</ui:repeat>
+			 	#{obsFormDefault}
+			</h:selectManyCheckbox>
 
-			<h:commandButton value="Inserir" action="#{local.inserir}"
-				class="btn btn-default btn-sm" />
+			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />
 
 		</h:form>
 	</div>
