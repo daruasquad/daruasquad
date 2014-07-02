@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:daruasquad="daruasquad/facelets">
+
+<daruasquad:template-header></daruasquad:template-header>
+<body>
+	<div class="container">
+		<daruasquad:template-menu-top></daruasquad:template-menu-top>
+		<div class="searchContainer">
+			<form method="post" action="#">
+				<input type="text" id="search" name="busca"
+					class=" col-md-11 col-sm-11 col-xs-12" />
+				<button type="submit" onclick="this.parent.submit()"
+					class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12">
+					<i class="fa fa-search fa-1x"></i>
+				</button>
+			</form>
+		</div>
+
+		<daruasquad:midia-pre-galery-struct></daruasquad:midia-pre-galery-struct>
+		<div id="gallery-container" style="width: 100%">
+			<ul class="items--small">
+				<li class="item"><a href="#"><img
+						src="#{request.contextPath}/assets/img/s-galery/small-1.png"
+						alt="" /></a></li>
+				<li class="item"><a href="#"><img
+						src="#{request.contextPath}/assets/img/s-galery/small-2.png"
+						alt="" /></a></li>
+				<li class="item"><a href="#"><img
+						src="#{request.contextPath}/assets/img/s-galery/small-3.png"
+						alt="" /></a></li>
+				<li class="item"><a href="#"><img
+						src="#{request.contextPath}/assets/img/s-galery/small-4.png"
+						alt="" /></a></li>
+			</ul>
+			<ul class="items--big">
+				<li class="item--big"><a href="#"> <figure> <img
+							src="#{request.contextPath}/assets/img/s-galery/big-1.jpg" alt="" />
+						<figcaption class="img-caption">Caption</figcaption> </figure>
+				</a></li>
+				<li class="item--big"><a href="#"> <figure> <img
+							src="#{request.contextPath}/assets/img/s-galery/big-2.jpg" alt="" />
+						<figcaption class="img-caption">Caption</figcaption> </figure>
+				</a></li>
+				<li class="item--big"><a href="#"> <figure> <img
+							src="#{request.contextPath}/assets/img/s-galery/big-3.jpg" alt="" />
+						<figcaption class="img-caption">Caption</figcaption> </figure>
+				</a></li>
+				<li class="item--big"><a href="#"> <figure> <img
+							src="#{request.contextPath}/assets/img/s-galery/big-4.jpg" alt="" />
+						<figcaption class="img-caption">Caption</figcaption> </figure>
+				</a></li>
+			</ul>
+		</div>
+		<daruasquad:midia-pos-galery-struct></daruasquad:midia-pos-galery-struct>
+
+
+	</div>
+</body>
+</html>

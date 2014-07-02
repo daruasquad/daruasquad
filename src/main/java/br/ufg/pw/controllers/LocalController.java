@@ -22,7 +22,44 @@ public class LocalController {
 	private List<Local> searchResult = new ArrayList<Local> () ;
 	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 	private LocalServices localService = new LocalServices();
-	private Local localForm = new Local();
+	private Local localForm = new Local(); //utilizado para inserção
+	
+	// Extrair para classe de mapa
+
+	private Double defaultLat 	= -16.671128;
+	private Double defaultLon 	= -49.282724;
+	private Integer defaultZoom =  11;
+	
+	private String mapCenterLat = defaultLat.toString();
+	private String mapCenterLon = defaultLon.toString();
+	private String mapZoom = defaultZoom.toString();
+
+	
+	public String getMapZoom() {
+		return mapZoom;
+	}
+	
+	public void setMapZoom(String mapZoom) {
+		this.mapZoom = mapZoom;
+	}
+	
+	/*Formulario de busca*/
+	public String getMapCenterLat() {
+		return mapCenterLat;
+	}
+
+	public void setMapCenterLat(String mapCenterLat) {
+		this.mapCenterLat = mapCenterLat;
+	}
+
+	public String getMapCenterLon() {
+		return mapCenterLon;
+	}
+
+	public void setMapCenterLon(String mapCenterLon) {
+		this.mapCenterLon = mapCenterLon;
+	}
+
 	private String busca ;
 	
 	
@@ -47,19 +84,21 @@ public class LocalController {
 	 * */
 	public List<Local> pesquisar() {
 		
-		//String busca = parameters.get("busca");
-		//Double lat = Double.parseDouble(parameters.get("lat"));
-		//Double lon = Double.parseDouble(parameters.get("lon"));
-		
-		Local coordLocal = new Local();
-		coordLocal.setLatitude(-16.671128);
-		coordLocal.setLongitude(-49.282724);
+		Double lat = mapCenterLat == "" ? defaultLat :  Double.parseDouble(mapCenterLat);
+		Double lon = mapCenterLon == "" ? defaultLon :  Double.parseDouble(mapCenterLon);
+		Integer zoom = mapZoom == "" ? defaultZoom : Integer.parseInt(mapZoom);
 		
 		if (busca == null) {
 			busca = "";
 		}
 		
-		searchResult = localService.pesquisar(busca, coordLocal, 11);
+		
+		Local coordLocal = new Local();
+		coordLocal.setLatitude(lat);
+		coordLocal.setLongitude(lon);
+		
+		
+		searchResult = localService.pesquisar(busca, coordLocal, zoom);
 		//genFakeResultMult() ;
 		return searchResult;
 	}
@@ -77,7 +116,7 @@ public class LocalController {
 	public List<Local> pesquisarId() {
 		int busca = Integer.parseInt(parameters.get("id"));
 		searchResult = new ArrayList<Local>();
-		Local pesquisa = localService.pesquisar(busca/*, lat, lon*/);
+		Local pesquisa = localService.pesquisar(busca);
 		searchResult.add(pesquisa);
 		//genFakeResultId();
 		return searchResult;
@@ -87,8 +126,7 @@ public class LocalController {
 	 * @param Local montado com os dados definidos pelo usuário no formulário
 	 *  */
 	public String inserir() {
-		System.out.println(localForm.getNome());
-		//localService.inserir(localForm);
+		localService.inserir(localForm);
 		return "";
 	}
 	

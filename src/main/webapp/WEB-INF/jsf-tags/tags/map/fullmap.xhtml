@@ -13,6 +13,18 @@
 			<link rel="stylesheet" href="#{request.contextPath}/assets/css/tags/fullmap.css" />
 			<!-- Final da fullmap tag -->
        
+       		<script type="text/javascript">
+				$(document).ready(function() {
+					//getMyPositionCenter();
+					insertSearchFormMapEvents();
+					$("[id$=mapCenterLat]").val(Application.map.center.lat());
+					$("[id$=mapCenterLon]").val(Application.map.center.lng());
+					$("[id$=mapZoom]").val(Application.map.zoom);
+					
+					
+				});
+			</script>
        </ui:composition>
 </html>
+
 

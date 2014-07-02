@@ -3,8 +3,17 @@ $(document).ready(function() {
 	Application.mapOptions =  mapOptions();
 	var mapElement = document.getElementById("map");
 	Application.map = new google.maps.Map(mapElement, mapOptions);
-	Application.map.setZoom(11);
-	Application.map.setCenter(new google.maps.LatLng(-15.6825443,-49.2538256));
+	
+	var lat = $("[id$=mapCenterLat]").val();
+	var lon = $("[id$=mapCenterLon]").val();
+	var zoom =	$("[id$=mapZoom]").val();
+	
+	console.log(lat);
+	var center = new google.maps.LatLng(Number(lat),Number(lon));
+	
+	Application.map.setCenter(center);
+	Application.map.setZoom(Number(zoom));
+	
 	Application.map.markers = [];
 	
 });
@@ -78,6 +87,22 @@ function insertLocalMapEvents() {
 		$("[id$=latitude]").val(lat);
 		$("[id$=longitude]").val(lng);
 	});
+	
+	
+	
+	
+}
+
+
+function insertSearchFormMapEvents() {
+	google.maps.event.addListener(Application.map, 'mouseup', updateSearchFormMapInfo);
+	google.maps.event.addListener(Application.map, 'zoom', updateSearchFormMapInfo);
+}
+
+function updateSearchFormMapInfo(event){
+	$("[id$=mapCenterLat]").val(Application.map.center.lat());
+	$("[id$=mapCenterLon]").val(Application.map.center.lng());
+	$("[id$=mapZoom]").val(Application.map.zoom);
 }
 
 

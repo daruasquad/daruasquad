@@ -10,14 +10,7 @@
 <body>
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
-		<div class="searchContainer">
-			<h:form method="post">
-				
-				<h:inputText  type="text" value="#{local.busca}" id="busca" name="busca" class=" col-md-11 col-sm-11 col-xs-12"  />
-				<h:commandButton  value="Buscar" action="#{local.pesquisarForm}" class="trigger btn btn-info btn-sm col-md-1 col-sm-1 col-xs-12"></h:commandButton>
-				
-			</h:form>
-		</div>
+			<daruasquad:search-form></daruasquad:search-form>
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
 		<script type="text/javascript">
 			$(document).ready(function() {

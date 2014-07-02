@@ -32,4 +32,8 @@
 		<tag-name>midia-pre-galery-struct</tag-name>
 		<source>tags/midia/pre-galery-struct.xhtml</source>
     </tag>
+    <tag>
+		<tag-name>search-form</tag-name>
+		<source>tags/template/search-form.xhtml</source>
+    </tag>
 </facelet-taglib>
