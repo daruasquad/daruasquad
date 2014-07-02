@@ -57,6 +57,42 @@ public class ObstaculoDao {
 		return lista;
 	}
 	
+	
+	/** Método que lista os obstáculos cadastrados
+	 * @author danielmelo
+	 * @return lista de objetos obstáculos cadastrados */
+	public List<Obstaculo> buscar() {
+		
+		List<Obstaculo> lista = new ArrayList<Obstaculo>();
+		Obstaculo obs = null;
+		
+		try {
+			
+			conn = JdbcUtil.createConnection();
+			
+			pstmt = conn.prepareStatement("select * from tipo_obstaculo order by nome");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				obs = new Obstaculo();
+				
+				obs.setNome( rs.getString("nome") );
+				
+				lista.add(obs);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JdbcUtil.close(conn, pstmt, rs);
+		}
+		
+		return lista;
+	}
+	
 	/** Método responsável por receber uma lista de obstáculos e inserir no banco usando uma transação corrente
 	 * @author brunokarpo
 	 * @param obstaculos : lista de obstáculos a serem inseridos
