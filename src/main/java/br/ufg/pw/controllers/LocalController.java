@@ -44,8 +44,11 @@ public class LocalController {
 	private String busca;
 	
 	/**Obstáculos selecionados no formulário de busca */
-	private String[] obsForm;
+	private String[] obsForm = {};
 	
+	
+
+
 	public Double defaultLat 	= -16.671128;
 	public Double defaultLon 	= -49.282724;
 	public Integer defaultZoom  =  11;
@@ -107,10 +110,13 @@ public class LocalController {
 		Local coordLocal = new Local();
 		coordLocal.setLatitude(lat);
 		coordLocal.setLongitude(lon);
-
-
+		try {
+			//FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+		}
+		catch (Exception e){
+			//do nothing
+		}
 		return  localService.pesquisar(busca, coordLocal, zoom);
-		//genFakeResultMult() ;
 		
 		
 	}
@@ -127,10 +133,14 @@ public class LocalController {
 	 * @return ArrayList<Local> lista de locais
 	 * */
 	public List<Local> pesquisarId() {
-		int busca = Integer.parseInt(parameters.get("id"));
+		Integer id = Integer.parseInt(parameters.get("id"));
+		if (id == null) {
+			FacesContext.getCurrentInstance().getExternalContext();
+		}
+		localForm.setId(id);
 		
 		ArrayList<Local> list = new ArrayList<Local>();
-		list.add(localService.pesquisar(busca));
+		list.add(localService.pesquisar(id));
 		return list;
 	}
 	
@@ -140,11 +150,26 @@ public class LocalController {
 	 * @param Local montado com os dados definidos pelo usuário no formulário
 	 *  */
 	public String inserir() {
+		
+		List<Obstaculo> obsList = new ArrayList<Obstaculo>();
+		
+		for (int i = 0; i < obsForm.length; i++) {
+			Obstaculo obs = new Obstaculo();
+			obs.setNome(obsForm[i]);
+			obsList.add(obs);
+		}
+		
+		localForm.setObstaculos(obsList);
+		
 		localForm.setUsuarioInsersor("user1");
 		localService.inserir(localForm);
 		return "";
 	}
 
+	public String excluir() {
+		localService.excluir(localForm);
+		return "index.xhtml?faces-redirect=true";
+	}
 	
 	/** Seta a string para a busca textual 
 	 * @param String s 	String sendo buscada
@@ -197,6 +222,14 @@ public class LocalController {
 
 	public void setObsService(ObstaculoServices obsService) {
 		this.obsService = new ObstaculoServices();
+	}
+	
+	public String[] getObsForm() {
+		return obsForm;
+	}
+
+	public void setObsForm(String[] obsForm) {
+		this.obsForm = obsForm;
 	}
 
 }

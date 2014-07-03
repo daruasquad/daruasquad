@@ -12,7 +12,17 @@
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
 			<daruasquad:search-form></daruasquad:search-form>
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
-		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//getMyPositionCenter();
+				insertSearchFormMapEvents();
+				$("[id$=mapCenterLat]").val(Application.map.center.lat());
+				$("[id$=mapCenterLon]").val(Application.map.center.lng());
+				$("[id$=mapZoom]").val(Application.map.zoom);
+				
+				
+			});
+		</script>
 
 		<!-- >daruasquad:midia-pre-galery-struct></daruasquad:midia-pre-galery-struct -->
 		<!-- >daruasquad:midia-pos-galery-struct></daruasquad:midia-pos-galery-struct -->

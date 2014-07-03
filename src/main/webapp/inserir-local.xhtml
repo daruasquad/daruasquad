@@ -38,24 +38,11 @@
 			<h:inputHidden value="#{local.localForm.latitude}" id="latitude" />
 			<h:inputHidden value="#{local.localForm.longitude}" id="longitude" />
 
-
-			<!-- 
-			<input type="hidden" name="rua" id="rua" />
-			<input type="hidden" name="bairro" id="bairro" />
-			<input type="hidden" name="cidade" id="cidade" />
-			<input type="hidden" name="estado" id="estado" />
-			<input type="hidden" name="pais" id="pais" />
-			 -->
-			 
-			
-			 
-				 <ui:repeat value="#{local.obsService.obsDefault}" var="obsDefault">
-				 <h:selectManyCheckbox value="{local.obsForm}" id="obstaculos">
-				 	<f:selectItem  itemLabel="#{obsDefault.nome}" itemValue="#{obsDefault.nome}" />
-				 </h:selectManyCheckbox> 
-				 </ui:repeat>
-			 	
-
+			 <h:selectManyCheckbox value="{local.obsForm}" id="obstaculos">
+			 	<ui:repeat value="#{local.obsService.obsDefault}" var="obsDefault">
+				 	<f:selectItem  itemLabel="#{obsDefault.nome}" itemValue="#{obsDefault.nome}" /> 
+			 	</ui:repeat>
+			 </h:selectManyCheckbox>
 			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />
 
 		</h:form>

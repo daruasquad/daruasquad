@@ -17,29 +17,34 @@
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h4 class="panel-title">
-							 #{value.nome}
-							 <a class="btn btn-default btn-xs pull-right"><i class="fa fa-car"></i> Rota até o local</a>
-							 <a class="btn btn-default btn-xs pull-right" href="galeria.xhtml"><i class="fa fa-calendar"></i> Mídia deste local</a>
-							 <a class="btn btn-default btn-xs pull-right"><i class="fa fa-film"></i> Eventos</a>
-						</h4>
+						<div class="panel-title">
+							<h4>#{value.nome}</h4>
+						</div>
 					</div>
 					
 					<div>
 						<div class="panel-body">
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<a class="btn btn-default btn-xs pull-right"><i class="fa fa-car"></i> Rota até o local</a>
+								 <a class="btn btn-default btn-xs pull-right" href="galeria.xhtml"><i class="fa fa-calendar"></i> Mídia deste local</a>
+								 <a class="btn btn-default btn-xs pull-right"><i class="fa fa-film"></i> Eventos</a>
+							</div>
 							<div class="col-md-12">
 								<h5 class="inline-block">Obstáculos:</h5>
-								<ui:repeat  value="#{value.obstaculos}" var="obs">
-									<div class="inline-block well well-sm">#{obs.nome}</div>
-								</ui:repeat>
+								<div class="col-md-12">
+									<ui:repeat  value="#{value.obstaculos}" var="obs">
+										<div class=" col-md-2 col-sm-2 col-xs-4 well well-sm">#{obs.nome}</div>
+									</ui:repeat>
+								</div>
 							</div>
-							<div class="col-md-12">
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
 								<h5 class="inline-block">Endereço:</h5> #{value.bairro}, #{value.cidade} -#{value.estado}, #{value.pais} 
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-12 col-sm-12 col-xs-12">
 								<h5 class="inline-block">Postado por</h5> 	#{value.usuarioInsersor}
 							</div>
-
 						</div>
 						<script type="text/javascript">
 							$(document).ready(function() {
@@ -48,6 +53,11 @@
 								Application.map.setZoom(16)
 							});
 						</script>
+
+						<h:form method="post" action="##">
+							<h:inputHidden value="#{local.localForm.id}" id="id" />
+							<h:commandButton action="#{local.excluir}" value="Apagar" outcome="" class="btn btn-default pull-right"></h:commandButton>
+						</h:form>
 					</div>
 				</div>
 			</div>
