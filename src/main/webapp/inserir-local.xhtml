@@ -22,7 +22,7 @@
 		</script>
 		<h:form method="post" action="##">
 			<div class="well">Clique no mapa para selecionar o local.
-				Insira um nome e veja a mágica.</div>
+				Insira um nome e selecione os obstáculos.</div>
 			<b><address id="formAddress"></address></b>
 			<h5 class="inline-block col-md-2">Nome do local:</h5>
 			<h:inputText value="#{local.localForm.nome}" class="col-md-8" name="nome" id="nome" />
@@ -38,11 +38,11 @@
 			<h:inputHidden value="#{local.localForm.latitude}" id="latitude" />
 			<h:inputHidden value="#{local.localForm.longitude}" id="longitude" />
 
-			 <h:selectManyCheckbox value="{local.obsForm}" id="obstaculos">
-			 	<ui:repeat value="#{local.obsService.obsDefault}" var="obsDefault">
-				 	<f:selectItem  itemLabel="#{obsDefault.nome}" itemValue="#{obsDefault.nome}" /> 
-			 	</ui:repeat>
+			 
+			 <h:selectManyCheckbox  id="obstaculos" value="local.obsForm">
+			 	<f:selectItems value="#{local.obsService.obsDefault}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o.nome}" />
 			 </h:selectManyCheckbox>
+			 
 			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />
 
 		</h:form>
