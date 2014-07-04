@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import br.ufg.pw.entidades.Local;
 import br.ufg.pw.entidades.MapBusca;
@@ -13,7 +13,7 @@ import br.ufg.pw.services.LocalServices;
 /** Classe controladora das views que tratam funcionalidades dos locais e obstáculos */
 
 @ManagedBean (name="local")
-@RequestScoped
+@SessionScoped
 public class LocalController {
 	
 	/* Propriedades de serviço */
@@ -33,9 +33,13 @@ public class LocalController {
 		this.local = local;
 	}
 
+	@ManagedProperty(value="#{mapBusca}")
 	/* Propriedade do mapa */
-	private MapBusca mapBusca = new MapBusca();;
+	private MapBusca mapBusca;
 	public MapBusca getMapBusca() {
+		if (mapBusca == null) {
+			mapBusca = new MapBusca();
+		}
 		return mapBusca;
 	}
 	public void setMapBusca(MapBusca maps) {
@@ -47,8 +51,10 @@ public class LocalController {
 	private List<Local> listLocal;
 	
 	public List<Local> getListLocal() {
-		if ( listLocal == null ) {
+		MapBusca mapBusca = getMapBusca();
+		if ( listLocal == null || !mapBusca.isUsed()) {
 			listLocal = localService.pesquisar(mapBusca);
+			mapBusca.markUsed();
 		}
 		return listLocal;
 	}
@@ -62,7 +68,7 @@ public class LocalController {
 	}
 	
 	public String pesquisar() {
-		return "index.xhtml";
+		return "";
 	}
 	
 }
