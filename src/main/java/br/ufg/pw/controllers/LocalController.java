@@ -61,4 +61,8 @@ public class LocalController {
 		localService.excluir(local);
 	}
 	
+	public String pesquisar() {
+		return "index.xhtml";
+	}
+	
 }
