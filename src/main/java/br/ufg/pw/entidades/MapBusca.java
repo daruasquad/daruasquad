@@ -9,6 +9,9 @@ public class MapBusca {
 	
 	
 	public String getBusca() {
+		if (busca == null) {
+			return "";
+		}
 		return busca;
 	}
 	public void setBusca(String busca) {
