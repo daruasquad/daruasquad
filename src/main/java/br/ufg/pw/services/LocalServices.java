@@ -54,4 +54,12 @@ public class LocalServices {
 	public void excluir(Local local) {
 		localDao.excluir(local);
 	}
+	
+	/** Busca um local específico e as informações do mesmo dado o identificador do local
+	 * @author brunokarpo
+	 * @param id: inteiro que contém o identificador do local no Banco de Dados 
+	 * @return local: Local que está persistido no Banco de Dados da aplicação*/
+	public Local pesquisar(int id) {
+		return localDao.buscar(id);
+	}
 }

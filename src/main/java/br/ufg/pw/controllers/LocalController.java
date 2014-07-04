@@ -1,10 +1,13 @@
 package br.ufg.pw.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import br.ufg.pw.entidades.Local;
 import br.ufg.pw.entidades.MapBusca;
@@ -15,6 +18,10 @@ import br.ufg.pw.services.LocalServices;
 @ManagedBean (name="local")
 @SessionScoped
 public class LocalController {
+	
+	/** Parâmetros da requisição */
+	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
 	
 	/* Propriedades de serviço */
 	@ManagedProperty(value="#{localService}")
@@ -69,6 +76,13 @@ public class LocalController {
 	
 	public String pesquisar() {
 		return "";
+	}
+	
+	public List<Local> pesquisarId() {
+		int id = Integer.parseInt(parameters.get("id"));
+		ArrayList<Local> result = new ArrayList<Local>();
+		result.add(localService.pesquisar(id));
+		return result;
 	}
 	
 }
