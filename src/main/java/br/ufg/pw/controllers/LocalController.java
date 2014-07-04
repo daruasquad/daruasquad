@@ -19,9 +19,7 @@ import br.ufg.pw.services.LocalServices;
 @SessionScoped
 public class LocalController {
 	
-	/** Parâmetros da requisição */
-	private Map<String, String> parameters =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-
+	
 	
 	/* Propriedades de serviço */
 	@ManagedProperty(value="#{localService}")
@@ -70,8 +68,16 @@ public class LocalController {
 		localService.inserir(local);
 	}
 	
-	public void excluir() {
+	public String excluir() {
 		localService.excluir(local);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+			return "/?faces-redirect=true"; //bugs
+		}
+		catch (Exception e) {
+			// do nothing;
+		}
+		return "/?faces-redirect=true";
 	}
 	
 	public String pesquisar() {
@@ -79,7 +85,8 @@ public class LocalController {
 	}
 	
 	public List<Local> pesquisarId() {
-		int id = Integer.parseInt(parameters.get("id"));
+		String idParam =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+		int id = Integer.parseInt(idParam);
 		ArrayList<Local> result = new ArrayList<Local>();
 		result.add(localService.pesquisar(id));
 		return result;
