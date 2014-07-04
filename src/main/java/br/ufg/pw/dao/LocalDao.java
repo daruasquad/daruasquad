@@ -11,6 +11,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import br.ufg.pw.entidades.Local;
+import br.ufg.pw.entidades.MapBusca;
 import br.ufg.pw.utilitarios.JdbcUtil;
 /** 
  * Classe de persistência das informações pertinentes à entidade Local */
@@ -89,9 +90,9 @@ public class LocalDao {
 	 * @param zoom: nível de Zoom do Mapa do usuário para definir o raio da busca
 	 * @return lista: um array de locais que atenderam a pesquisa 
 	 * @exception Exception: se der erro printa o StackTrace para tratarmos */
-	public List<Local> buscar(String busca, Local cordenada, int zoom) {
+	public List<Local> buscar(MapBusca maps) {
 		
-		String nova = busca.replace(" ", "%"); //Modifica cada espaço da string do usuário por um sinal %
+		String nova = maps.getBusca().replace(" ", "%"); //Modifica cada espaço da string do usuário por um sinal %
 		
 		List<Local> lista = new ArrayList<Local>();
 		Local local = null;
@@ -115,8 +116,8 @@ public class LocalDao {
 											+ " or muto.nome_modalidade ilike '%" + nova  + "%'"
 											+ " or etm.nome_esporte ilike '%" + nova  + "%'"
 											+ ") "
-											+ " and ST_DWithin(lo.geoposicao, ST_GeographyFromText(' " + funcaoSTGeography(cordenada) + " '), "
-											+ funcaoStGeographyZoom(zoom) 
+											+ " and ST_DWithin(lo.geoposicao, ST_GeographyFromText(' " + funcaoSTGeography( maps ) + " '), "
+											+ funcaoStGeographyZoom(maps.getZoom()) 
 											+  ") order by lo.id");
 			
 			rs = pstmt.executeQuery();
@@ -138,35 +139,35 @@ public class LocalDao {
 		return lista;
 	}
 	
-	/** Encontra um local específico através do ID passado pela aplicação na pesquisa
-	 * @author brunokarpo
-	 * @param id inteiro identificado no Banco de Dados
-	 * @return local Local específico buscado pelo sistema */
-	public Local buscar(int id) {
-		
-		Local local = null;
-		
-		try {
-			conn = JdbcUtil.createConnection();
-			
-			pstmt = conn.prepareStatement("select * from local where id = ?");
-			pstmt.setInt(1, id);
-			
-			rs = pstmt.executeQuery();
-			
-			rs.next();
-			
-			local = objetoLocal(rs);
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JdbcUtil.close(conn, pstmt, rs);
-		}
-		
-		return local;
-	}
+//	/** Encontra um local específico através do ID passado pela aplicação na pesquisa
+//	 * @author brunokarpo
+//	 * @param id inteiro identificado no Banco de Dados
+//	 * @return local Local específico buscado pelo sistema */
+//	public Local buscar(MapBusca maps) {
+//		
+//		Local local = null;
+//		
+//		try {
+//			conn = JdbcUtil.createConnection();
+//			
+//			pstmt = conn.prepareStatement("select * from local where id = ?");
+//			pstmt.setInt(1, );
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			rs.next();
+//			
+//			local = objetoLocal(rs);
+//			
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			JdbcUtil.close(conn, pstmt, rs);
+//		}
+//		
+//		return local;
+//	}
 	
 	/** Método responsável pela exclusão de um local no Banco de Dados 
 	 * @author brunokarpo
@@ -278,8 +279,8 @@ public class LocalDao {
 	 * @author brunokarpo
 	 * @param local: uma cordenada de um local
 	 * @return String contendo o SRID (formato da cordenada) mais uma string do Ponto geografico alvo */
-	private String funcaoSTGeography (Local local) {
-		return "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )";
+	private String funcaoSTGeography (MapBusca maps) {
+		return "SRID=4326;POINT ( " + String.valueOf( maps.getLatitude() ) + " " + String.valueOf( maps.getLongitude() ) + " )";
 	}
 	
 	/** Método que retorna o raio de busca das pesquisas na aplicação em metros 

@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 
 import br.ufg.pw.dao.LocalDao;
 import br.ufg.pw.entidades.Local;
+import br.ufg.pw.entidades.MapBusca;
 
 /** 
  * Classe LocalServices.
@@ -35,17 +36,17 @@ public class LocalServices {
 	 * @param cordenada: um objeto de local com apenas a latitude e longitude da posição atual do usuário
 	 * @param zoom: nível atual de zoom do mapa do usuário para buscar apenas os locais próximos a este num determinado raio
 	 * @return lista de locais que estão persistidas no Banco*/
-	public List<Local> pesquisar(String busca, Local cordenada, int zoom) {
-		return localDao.buscar(busca, cordenada, zoom);
+	public List<Local> pesquisar(MapBusca maps) {
+		return localDao.buscar(maps);
 	}
 	
-	/** Busca um local específico e as informações do mesmo dado o identificador do local
-	 * @author brunokarpo
-	 * @param id: inteiro que contém o identificador do local no Banco de Dados 
-	 * @return local: Local que está persistido no Banco de Dados da aplicação*/
-	public Local pesquisar(int id) {
-		return localDao.buscar(id);
-	}
+//	/** Busca um local específico e as informações do mesmo dado o identificador do local
+//	 * @author brunokarpo
+//	 * @param id: inteiro que contém o identificador do local no Banco de Dados 
+//	 * @return local: Local que está persistido no Banco de Dados da aplicação*/
+//	public Local pesquisar(int id) {
+//		return localDao.buscar(id);
+//	}
 	/** Exclui um local recebido como parâmetro 
 	 * @author brunokarpo
 	 * @param local Local que será excluído
