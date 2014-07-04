@@ -5,6 +5,11 @@ public class MapBusca {
 	private String busca;
 	private double latitude;
 	private double longitude;
+	
+	private double latitudeDefault 	= -16.679985;
+	private double longitudeDefault = -49.246674;
+	
+	
 	private int zoom;
 	
 	
@@ -18,12 +23,20 @@ public class MapBusca {
 		this.busca = busca;
 	}
 	public double getLatitude() {
+		if (latitude == 0.0) {
+			latitude = latitudeDefault;
+			return latitudeDefault;
+		}
 		return latitude;
 	}
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public double getLongitude() {
+		if (longitude == 0.0) {
+			longitude = longitudeDefault;
+			return longitudeDefault;
+		}
 		return longitude;
 	}
 	public void setLongitude(double longitude) {

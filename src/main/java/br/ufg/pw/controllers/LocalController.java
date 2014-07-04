@@ -34,12 +34,12 @@ public class LocalController {
 	}
 
 	/* Propriedade do mapa */
-	private MapBusca maps;
-	public MapBusca getMaps() {
-		return maps;
+	private MapBusca mapBusca = new MapBusca();;
+	public MapBusca getMapBusca() {
+		return mapBusca;
 	}
-	public void setMaps(MapBusca maps) {
-		this.maps = maps;
+	public void setMapBusca(MapBusca maps) {
+		this.mapBusca = maps;
 	}
 
 	
@@ -48,7 +48,7 @@ public class LocalController {
 	
 	public List<Local> getListLocal() {
 		if ( listLocal == null ) {
-			listLocal = localService.pesquisar(maps);
+			listLocal = localService.pesquisar(mapBusca);
 		}
 		return listLocal;
 	}
