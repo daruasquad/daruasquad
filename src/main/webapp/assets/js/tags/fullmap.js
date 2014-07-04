@@ -49,6 +49,15 @@ function addMarker(idLocal, lat, lon, title) {
 		title:title
 	};
 	
+	marker.id = idLocal;
+	
+	google.maps.event.addListener(marker, 'click', function() {
+		// Filtrar pelo local clicado na lista
+		var id = this.id;
+		$("div.panel-body[data-id=" + id + "]").show().siblings().hide();
+		
+	  });
+	
 	Application.map.markers.push(marker);
 
 }
@@ -97,6 +106,8 @@ function insertLocalMapEvents() {
 function insertSearchFormMapEvents() {
 	google.maps.event.addListener(Application.map, 'mouseup', updateSearchFormMapInfo);
 	google.maps.event.addListener(Application.map, 'zoom', updateSearchFormMapInfo);
+	google.maps.event.addListener(Application.map, 'center_changed', updateSearchFormMapInfo);
+	
 }
 
 function updateSearchFormMapInfo(event){
