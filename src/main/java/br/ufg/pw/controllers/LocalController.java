@@ -21,15 +21,17 @@ public class LocalController {
 	
 	
 	
-	/* Propriedades de serviço */
+	/** Propriedades de serviço */
 	@ManagedProperty(value="#{localService}")
 	private LocalServices localService;
-	
 	public void setLocalService(LocalServices localService) {
 		this.localService = new LocalServices();
 	}
 	
-	/* Propriedade de Local */
+	/** 
+	 * Propriedade de Local
+	 * Guarda uma instância de local para uso em operações genéricas
+	 * */
 	private Local local;
 	public Local getLocal() {
 		return local;
@@ -39,7 +41,7 @@ public class LocalController {
 	}
 
 	@ManagedProperty(value="#{mapBusca}")
-	/* Propriedade do mapa */
+	/** Propriedade do mapa */
 	private MapBusca mapBusca;
 	public MapBusca getMapBusca() {
 		if (mapBusca == null) {
@@ -59,7 +61,7 @@ public class LocalController {
 		MapBusca mapBusca = getMapBusca();
 		if ( listLocal == null || !mapBusca.isUsed()) {
 			listLocal = localService.pesquisar(mapBusca);
-			mapBusca.markUsed();
+			mapBusca.markUsed(); // essa busca ja foi feita
 		}
 		return listLocal;
 	}
@@ -68,6 +70,10 @@ public class LocalController {
 		localService.inserir(local);
 	}
 	
+	/** Exclusão de local
+	 * @bug 
+	 * @return String
+	 */
 	public String excluir() {
 		localService.excluir(local);
 		try {
@@ -80,10 +86,14 @@ public class LocalController {
 		return "/?faces-redirect=true";
 	}
 	
+	/** Usado para binding no formulário de busca. */
 	public String pesquisar() {
 		return "";
 	}
 	
+	/** Pesquisa especificamente um local. Usado quando se tem um "id" sendo passado como parâmetro
+	 * @return List<Local> um listLocal de um elemento, para ser impresso na tela
+	 */
 	public List<Local> pesquisarId() {
 		String idParam =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
 		int id = Integer.parseInt(idParam);
