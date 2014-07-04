@@ -21,7 +21,7 @@ public class LocalController {
 	private LocalServices localService;
 	
 	public void setLocalService(LocalServices localService) {
-		this.localService = localService;
+		this.localService = new LocalServices();
 	}
 	
 	/* Propriedade de Local */
