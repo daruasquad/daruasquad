@@ -4,9 +4,9 @@ $(document).ready(function() {
 	var mapElement = document.getElementById("map");
 	Application.map = new google.maps.Map(mapElement, mapOptions);
 	
-	var lat = $("[id$=mapCenterLat]").val();
-	var lon = $("[id$=mapCenterLon]").val();
-	var zoom =	$("[id$=mapZoom]").val();
+	var lat = $("[id$=latitude]").val();
+	var lon = $("[id$=longitude]").val();
+	var zoom =	$("[id$=zoom]").val();
 	
 	console.log(lat);
 	var center = new google.maps.LatLng(Number(lat),Number(lon));
@@ -100,9 +100,9 @@ function insertSearchFormMapEvents() {
 }
 
 function updateSearchFormMapInfo(event){
-	$("[id$=mapCenterLat]").val(Application.map.center.lat());
-	$("[id$=mapCenterLon]").val(Application.map.center.lng());
-	$("[id$=mapZoom]").val(Application.map.zoom);
+	$("[id$=latitude]").val(Application.map.center.lat());
+	$("[id$=longitude]").val(Application.map.center.lng());
+	$("[id$=zoom]").val(Application.map.zoom);
 }
 
 

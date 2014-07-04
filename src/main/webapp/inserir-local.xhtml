@@ -39,8 +39,8 @@
 			<h:inputHidden value="#{local.localForm.longitude}" id="longitude" />
 
 			 
-			 <h:selectManyCheckbox  id="obstaculos" value="local.obsForm">
-			 	<f:selectItems value="#{local.obsService.obsDefault}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o.nome}" />
+			 <h:selectManyCheckbox  value="local.obsForm">
+			 	<f:selectItems value="#{local.obsService.obsDefault}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o.nome}" name="#{o.nome}"/>
 			 </h:selectManyCheckbox>
 			 
 			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />

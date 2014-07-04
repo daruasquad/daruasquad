@@ -16,9 +16,9 @@
 			$(document).ready(function() {
 				//getMyPositionCenter();
 				insertSearchFormMapEvents();
-				$("[id$=mapCenterLat]").val(Application.map.center.lat());
-				$("[id$=mapCenterLon]").val(Application.map.center.lng());
-				$("[id$=mapZoom]").val(Application.map.zoom);
+				$("[id$=latitude]").val(Application.map.center.lat());
+				$("[id$=longitude]").val(Application.map.center.lng());
+				$("[id$=zoom]").val(Application.map.zoom);
 				
 				
 			});
@@ -38,7 +38,7 @@
 				
 				<div id="collapseOne" class="panel-collapse collapse in">
 					
-					<ui:repeat value="#{local.pesquisar()}" var="value">
+					<ui:repeat value="#{local.listLocal}" var="value">
 						
 						<div class="panel-body">
 							<div class="col-md-10 col-xs-12">

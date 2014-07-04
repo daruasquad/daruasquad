@@ -8,6 +8,7 @@ public class MapBusca {
 	
 	private double latitudeDefault 	= -16.679985;
 	private double longitudeDefault = -49.246674;
+	private int zoomDefault = 11;
 	
 	
 	private int zoom;
@@ -43,6 +44,9 @@ public class MapBusca {
 		this.longitude = longitude;
 	}
 	public int getZoom() {
+		if(zoom == 0) {
+			zoom = zoomDefault;
+		}
 		return zoom;
 	}
 	public void setZoom(int zoom) {

@@ -4,12 +4,13 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
 	<ui:composition>
-	
+	<ui:debug />
 		<nav class="navbar">
+		
 			<div class="navbar navbar-default navbar-fixed-top">
 				<div class="container">
 					<div class="navbar-header">
-						<a href="../" class="navbar-brand">DaRuaSquad</a>
+						<a href="#{request.contextPath}" class="navbar-brand">DaRuaSquad</a>
 						<button class="navbar-toggle" type="button" data-toggle="collapse"
 							data-target="#navbar-main">
 							<span class="icon-bar"></span> <span class="icon-bar"></span> <span
@@ -22,6 +23,7 @@
 							<li><a href="#{request.contextPath}/inserir-local.xhtml">Inserir novo local</a></li>
 						</ul>
 					</div>
+					
 				</div>
 			</div>
 		</nav>
