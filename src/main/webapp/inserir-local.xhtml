@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
-			<daruasquad:search-form></daruasquad:search-form>
+			
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -25,24 +25,24 @@
 				Insira um nome e selecione os obstáculos.</div>
 			<b><address id="formAddress"></address></b>
 			<h5 class="inline-block col-md-2">Nome do local:</h5>
-			<h:inputText value="#{local.localForm.nome}" class="col-md-8" name="nome" id="nome" />
+			<h:inputText value="#{local.local.nome}" class="col-md-8" name="nome" id="nome" />
 
-			<h:inputHidden value="#{local.localForm.endereco}" id="rua" />
-			<h:inputHidden value="#{local.localForm.bairro}" id="bairro" />
-			<h:inputHidden value="#{local.localForm.cidade}" id="cidade" />
-			<h:inputHidden value="#{local.localForm.estado}" id="estado" />
-			<h:inputHidden value="#{local.localForm.pais}" id="pais" />
-			<h:inputHidden value="#{local.localForm.usuarioInsersor}"
+			<h:inputHidden value="#{local.local.endereco}" id="rua" />
+			<h:inputHidden value="#{local.local.bairro}" id="bairro" />
+			<h:inputHidden value="#{local.local.cidade}" id="cidade" />
+			<h:inputHidden value="#{local.local.estado}" id="estado" />
+			<h:inputHidden value="#{local.local.pais}" id="pais" />
+			<h:inputHidden value="#{local.local.usuarioInsersor}"
 				id="usuarioInsersor" />
 
-			<h:inputHidden value="#{local.localForm.latitude}" id="latitude" />
-			<h:inputHidden value="#{local.localForm.longitude}" id="longitude" />
+			<h:inputHidden value="#{local.local.latitude}" id="latitude" />
+			<h:inputHidden value="#{local.local.longitude}" id="longitude" />
 
-			 
+			<!--  
 			 <h:selectManyCheckbox  value="local.obsForm">
-			 	<f:selectItems value="#{local.obsService.obsDefault}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o.nome}" name="#{o.nome}"/>
+			 	<f:selectItems value="{local.obsService.obsDefault}"  var="o"  itemLabel="{o.nome}" itemValue="{o.nome}" name="{o.nome}"/>
 			 </h:selectManyCheckbox>
-			 
+			  -->
 			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />
 
 		</h:form>

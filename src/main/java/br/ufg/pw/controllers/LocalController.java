@@ -34,6 +34,9 @@ public class LocalController {
 	 * */
 	private Local local;
 	public Local getLocal() {
+		if (local == null) {
+			local = new Local();
+		}
 		return local;
 	}
 	public void setLocal(Local local) {
@@ -66,8 +69,11 @@ public class LocalController {
 		return listLocal;
 	}
 	
-	public void inserir() {
+	public String inserir() {
+		System.out.print(local);;
+		local.setUsuarioInsersor("user1");
 		localService.inserir(local);
+		return "index.xhtml?faces-redirect=true";
 	}
 	
 	/** Exclusão de local
