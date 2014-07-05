@@ -71,25 +71,25 @@ public class LocalController implements Serializable{
 	
 
 	/* Aquela implementação feia de obstaculos */
-	private String[] listObs;
-	public String[] getListObs() {
-		return listObs;
-	}
-	public void setListObs(String[] listObs) {
-		this.listObs = listObs;
-	}
+//	private String[] listObs;
+//	public String[] getListObs() {
+//		return listObs;
+//	}
+//	public void setListObs(String[] listObs) {
+//		this.listObs = listObs;
+//	}
 	
 	public String inserir() {
 		
-		Obstaculo obs;
-		List<Obstaculo> temp = new ArrayList<Obstaculo>();
-		
-		for(String nome : listObs) {
-			obs = new Obstaculo();
-			obs.setNome(nome);
-			temp.add(obs);
-		}
-		local.setObstaculos(temp);
+//		Obstaculo obs;
+//		List<Obstaculo> temp = new ArrayList<Obstaculo>();
+//		
+//		for(String nome : listObs) {
+//			obs = new Obstaculo();
+//			obs.setNome(nome);
+//			temp.add(obs);
+//		}
+//		local.setObstaculos(temp);
 		
 		localService.inserir(local);
 		return "index.xhtml?faces-redirect=true";
