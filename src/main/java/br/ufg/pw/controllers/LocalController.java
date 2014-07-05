@@ -1,5 +1,6 @@
 package br.ufg.pw.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -8,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 
 import br.ufg.pw.entidades.Local;
 import br.ufg.pw.entidades.MapBusca;
+import br.ufg.pw.entidades.Obstaculo;
 import br.ufg.pw.services.LocalServices;
 
 /** Classe controladora das views que tratam funcionalidades dos locais e obstáculos */
@@ -27,7 +29,7 @@ public class LocalController {
 	/* Propriedade de Local */
 	private Local local;
 	public Local getLocal() {
-		return local;
+		return local == null ? local = new Local() : local;
 	}
 	public void setLocal(Local local) {
 		this.local = local;
@@ -53,7 +55,27 @@ public class LocalController {
 		return listLocal;
 	}
 	
+	/* Aquela implementação feia de obstaculos */
+	private String[] listObs;
+	public String[] getListObs() {
+		return listObs;
+	}
+	public void setListObs(String[] listObs) {
+		this.listObs = listObs;
+	}
+	
 	public void inserir() {
+		
+		Obstaculo obs;
+		List<Obstaculo> temp = new ArrayList<Obstaculo>();
+		
+		for(String nome : listObs) {
+			obs = new Obstaculo();
+			obs.setNome(nome);
+			temp.add(obs);
+		}
+		local.setObstaculos(temp);
+		
 		localService.inserir(local);
 	}
 	

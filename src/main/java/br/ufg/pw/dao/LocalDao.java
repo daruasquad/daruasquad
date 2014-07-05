@@ -46,7 +46,8 @@ public class LocalDao {
 			pstmt.setString(4, local.getEstado());
 			pstmt.setString(5, local.getPais());
 			pstmt.setString(6, local.getNome());
-			pstmt.setString(7, local.getUsuarioInsersor());
+//			pstmt.setString(7, local.getUsuarioInsersor());
+			pstmt.setString(7, "user1");
 			pstmt.setString(8, local.getBairro());
 			pstmt.setString(9, "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )");
 			pstmt.setString(10, local.getEndereco() );
