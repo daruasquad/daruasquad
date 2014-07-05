@@ -1,5 +1,6 @@
 package br.ufg.pw.controllers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,11 @@ import br.ufg.pw.services.LocalServices;
 
 @ManagedBean (name="local")
 @SessionScoped
-public class LocalController {
-	
-	
-	
+public class LocalController implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** Propriedades de serviço */
 //	@ManagedProperty(value="#{localService}")
 	private LocalServices localService = new LocalServices();

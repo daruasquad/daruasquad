@@ -40,8 +40,8 @@
 
 
 			 
-			 <h:selectManyCheckbox  value="#{local.listObs}">
-			 	<f:selectItems value="#{obstaculo.listaObs}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o.nome}" name="#{o.nome}"/>
+			 <h:selectManyCheckbox  value="#{local.local.obstaculos}" converter="obstaculoConverter">
+			 	<f:selectItems value="#{obstaculo.listaObs}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o}" name="#{o.nome}"/>
 			 </h:selectManyCheckbox>
 			 
 			<h:commandButton value="Inserir" action="#{local.inserir}"	class="btn btn-default btn-sm" />
