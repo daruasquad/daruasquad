@@ -2,7 +2,6 @@ package br.ufg.pw.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -23,8 +22,8 @@ public class LocalController {
 	
 	
 	/** Propriedades de serviço */
-	@ManagedProperty(value="#{localService}")
-	private LocalServices localService;
+//	@ManagedProperty(value="#{localService}")
+	private LocalServices localService = new LocalServices();
 	public void setLocalService(LocalServices localService) {
 		this.localService = new LocalServices();
 	}
@@ -35,15 +34,9 @@ public class LocalController {
 	 * */
 	private Local local;
 	public Local getLocal() {
-<<<<<<< HEAD
-		return local == null ? local = new Local() : local;
-=======
-		if (local == null) {
-			local = new Local();
-		}
-		return local;
->>>>>>> c89e46bd3369eb9a677e283a6021b2c106eb2c5c
+		return local == null ? new Local() : local;
 	}
+	
 	public void setLocal(Local local) {
 		this.local = local;
 	}
@@ -74,7 +67,7 @@ public class LocalController {
 		return listLocal;
 	}
 	
-<<<<<<< HEAD
+
 	/* Aquela implementação feia de obstaculos */
 	private String[] listObs;
 	public String[] getListObs() {
@@ -84,7 +77,7 @@ public class LocalController {
 		this.listObs = listObs;
 	}
 	
-	public void inserir() {
+	public String inserir() {
 		
 		Obstaculo obs;
 		List<Obstaculo> temp = new ArrayList<Obstaculo>();
@@ -96,11 +89,6 @@ public class LocalController {
 		}
 		local.setObstaculos(temp);
 		
-=======
-	public String inserir() {
-		System.out.print(local);;
-		local.setUsuarioInsersor("user1");
->>>>>>> c89e46bd3369eb9a677e283a6021b2c106eb2c5c
 		localService.inserir(local);
 		return "index.xhtml?faces-redirect=true";
 	}
