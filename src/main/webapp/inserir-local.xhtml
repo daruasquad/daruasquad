@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
-			<daruasquad:search-form></daruasquad:search-form>
+			
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -37,6 +37,7 @@
 
 			<h:inputHidden value="#{local.local.latitude}" id="latitude" />
 			<h:inputHidden value="#{local.local.longitude}" id="longitude" />
+
 
 			 
 			 <h:selectManyCheckbox  value="#{local.listObs}">

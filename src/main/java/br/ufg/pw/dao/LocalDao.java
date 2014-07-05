@@ -140,6 +140,37 @@ public class LocalDao {
 		return lista;
 	}
 	
+	/** Encontra um local específico através do ID passado pela aplicação na pesquisa
+	 * @author brunokarpo
+	 * @param id inteiro identificado no Banco de Dados
+	 * @return local Local específico buscado pelo sistema */
+	public Local buscar(int id) {
+
+		Local local = null;
+
+		try {
+			conn = JdbcUtil.createConnection();
+
+			pstmt = conn.prepareStatement("select * from local where id = ?");
+			pstmt.setInt(1, id);
+
+			rs = pstmt.executeQuery();
+
+			rs.next();
+
+			local = objetoLocal(rs);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(conn, pstmt, rs);
+		}
+
+		return local;
+	}
+
+	
 //	/** Encontra um local específico através do ID passado pela aplicação na pesquisa
 //	 * @author brunokarpo
 //	 * @param id inteiro identificado no Banco de Dados

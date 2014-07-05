@@ -2,10 +2,12 @@ package br.ufg.pw.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import br.ufg.pw.entidades.Local;
 import br.ufg.pw.entidades.MapBusca;
@@ -15,29 +17,44 @@ import br.ufg.pw.services.LocalServices;
 /** Classe controladora das views que tratam funcionalidades dos locais e obstáculos */
 
 @ManagedBean (name="local")
-@RequestScoped
+@SessionScoped
 public class LocalController {
 	
-	/* Propriedades de serviço */
+	
+	
+	/** Propriedades de serviço */
 	@ManagedProperty(value="#{localService}")
 	private LocalServices localService;
-	
 	public void setLocalService(LocalServices localService) {
 		this.localService = new LocalServices();
 	}
 	
-	/* Propriedade de Local */
+	/** 
+	 * Propriedade de Local
+	 * Guarda uma instância de local para uso em operações genéricas
+	 * */
 	private Local local;
 	public Local getLocal() {
+<<<<<<< HEAD
 		return local == null ? local = new Local() : local;
+=======
+		if (local == null) {
+			local = new Local();
+		}
+		return local;
+>>>>>>> c89e46bd3369eb9a677e283a6021b2c106eb2c5c
 	}
 	public void setLocal(Local local) {
 		this.local = local;
 	}
 
-	/* Propriedade do mapa */
-	private MapBusca mapBusca = new MapBusca();;
+	@ManagedProperty(value="#{mapBusca}")
+	/** Propriedade do mapa */
+	private MapBusca mapBusca;
 	public MapBusca getMapBusca() {
+		if (mapBusca == null) {
+			mapBusca = new MapBusca();
+		}
 		return mapBusca;
 	}
 	public void setMapBusca(MapBusca maps) {
@@ -49,12 +66,15 @@ public class LocalController {
 	private List<Local> listLocal;
 	
 	public List<Local> getListLocal() {
-		if ( listLocal == null ) {
+		MapBusca mapBusca = getMapBusca();
+		if ( listLocal == null || !mapBusca.isUsed()) {
 			listLocal = localService.pesquisar(mapBusca);
+			mapBusca.markUsed(); // essa busca ja foi feita
 		}
 		return listLocal;
 	}
 	
+<<<<<<< HEAD
 	/* Aquela implementação feia de obstaculos */
 	private String[] listObs;
 	public String[] getListObs() {
@@ -76,15 +96,45 @@ public class LocalController {
 		}
 		local.setObstaculos(temp);
 		
+=======
+	public String inserir() {
+		System.out.print(local);;
+		local.setUsuarioInsersor("user1");
+>>>>>>> c89e46bd3369eb9a677e283a6021b2c106eb2c5c
 		localService.inserir(local);
+		return "index.xhtml?faces-redirect=true";
 	}
 	
-	public void excluir() {
+	/** Exclusão de local
+	 * @bug 
+	 * @return String
+	 */
+	public String excluir() {
 		localService.excluir(local);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+			return "/?faces-redirect=true"; //bugs
+		}
+		catch (Exception e) {
+			// do nothing;
+		}
+		return "/?faces-redirect=true";
 	}
 	
+	/** Usado para binding no formulário de busca. */
 	public String pesquisar() {
-		return "index.xhtml";
+		return "";
+	}
+	
+	/** Pesquisa especificamente um local. Usado quando se tem um "id" sendo passado como parâmetro
+	 * @return List<Local> um listLocal de um elemento, para ser impresso na tela
+	 */
+	public List<Local> pesquisarId() {
+		String idParam =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+		int id = Integer.parseInt(idParam);
+		ArrayList<Local> result = new ArrayList<Local>();
+		result.add(localService.pesquisar(id));
+		return result;
 	}
 	
 }
