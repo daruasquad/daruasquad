@@ -8,7 +8,7 @@ import javax.faces.bean.RequestScoped;
 import br.ufg.pw.entidades.Obstaculo;
 import br.ufg.pw.services.ObstaculoServices;
 
-@ManagedBean (name="obstaculo")
+@ManagedBean (name="obstaculoBean")
 @RequestScoped
 public class ObstaculoController {
 
@@ -16,15 +16,15 @@ public class ObstaculoController {
 	public void setObsServ(ObstaculoServices obsServ) {
 		this.obsServ = obsServ;
 	}
-	
-	private Obstaculo obs;
+
+	private Obstaculo obs = new Obstaculo();
 	public Obstaculo getObs() {
 		return obs;
 	}
 	public void setObs(Obstaculo obs) {
 		this.obs = obs;
 	}
-	
+
 	private List<Obstaculo> listaObs;
 	public List<Obstaculo> getListaObs() {
 		if(listaObs == null) {
@@ -32,5 +32,5 @@ public class ObstaculoController {
 		}
 		return listaObs;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -10,10 +10,10 @@
 <body>
 	<div class="container">
 		<daruasquad:template-menu-top></daruasquad:template-menu-top>
-			
+
 		<daruasquad:map-fullmap></daruasquad:map-fullmap>
-		
-		<ui:repeat value="#{local.pesquisarId()}" var="value">
+
+		<ui:repeat value="#{localBean.pesquisarId()}" var="value">
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -21,10 +21,10 @@
 							<h4>#{value.nome}</h4>
 						</div>
 					</div>
-					
+
 					<div>
 						<div class="panel-body">
-							
+
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<a class="btn btn-default btn-xs pull-right"><i class="fa fa-car"></i> Rota até o local</a>
 								 <a class="btn btn-default btn-xs pull-right" href="galeria.xhtml"><i class="fa fa-calendar"></i> Mídia deste local</a>
@@ -38,9 +38,9 @@
 									</ui:repeat>
 								</div>
 							</div>
-							
+
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<h5 class="inline-block">Endereço:</h5> #{value.bairro}, #{value.cidade} -#{value.estado}, #{value.pais} 
+								<h5 class="inline-block">Endereço:</h5> #{value.bairro}, #{value.cidade} -#{value.estado}, #{value.pais}
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<h5 class="inline-block">Postado por</h5> 	#{value.usuarioInsersor}
@@ -53,7 +53,7 @@
 								Application.map.setZoom(16)
 							});
 						</script>
-<!-- 
+<!--
 						<h:form method="post" action="##">
 							<h:inputHidden value="{local.local.id}" id="id" />
 							<h:commandButton action="{local.excluir}" value="Apagar" outcome="" class="btn btn-default pull-right"></h:commandButton>

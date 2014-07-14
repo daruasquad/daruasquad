@@ -16,29 +16,29 @@ import br.ufg.pw.services.LocalServices;
 
 /** Classe controladora das views que tratam funcionalidades dos locais e obstáculos */
 
-@ManagedBean (name="local")
+@ManagedBean (name="localBean")
 @SessionScoped
 public class LocalController implements Serializable{
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	/** Propriedades de serviço */
-//	@ManagedProperty(value="#{localService}")
-	private LocalServices localService = new LocalServices();
+	@ManagedProperty(value="#{localService}")
+	private LocalServices localService;
 	public void setLocalService(LocalServices localService) {
 		this.localService = new LocalServices();
 	}
-	
-	/** 
+
+	/**
 	 * Propriedade de Local
 	 * Guarda uma instância de local para uso em operações genéricas
 	 * */
-	private Local local;
+	private Local local = new Local();
 	public Local getLocal() {
-		return local == null ? new Local() : local;
+		return local;
 	}
-	
+
 	public void setLocal(Local local) {
 		this.local = local;
 	}
@@ -56,10 +56,10 @@ public class LocalController implements Serializable{
 		this.mapBusca = maps;
 	}
 
-	
+
 	/* Implementação da cache da lista de locais default */
 	private List<Local> listLocal;
-	
+
 	public List<Local> getListLocal() {
 		MapBusca mapBusca = getMapBusca();
 		if ( listLocal == null || !mapBusca.isUsed()) {
@@ -68,35 +68,15 @@ public class LocalController implements Serializable{
 		}
 		return listLocal;
 	}
-	
 
-	/* Aquela implementação feia de obstaculos */
-//	private String[] listObs;
-//	public String[] getListObs() {
-//		return listObs;
-//	}
-//	public void setListObs(String[] listObs) {
-//		this.listObs = listObs;
-//	}
-	
 	public String inserir() {
-		
-//		Obstaculo obs;
-//		List<Obstaculo> temp = new ArrayList<Obstaculo>();
-//		
-//		for(String nome : listObs) {
-//			obs = new Obstaculo();
-//			obs.setNome(nome);
-//			temp.add(obs);
-//		}
-//		local.setObstaculos(temp);
-		
+
 		localService.inserir(local);
 		return "index.xhtml?faces-redirect=true";
 	}
-	
+
 	/** Exclusão de local
-	 * @bug 
+	 * @bug
 	 * @return String
 	 */
 	public String excluir() {
@@ -110,12 +90,12 @@ public class LocalController implements Serializable{
 		}
 		return "/?faces-redirect=true";
 	}
-	
+
 	/** Usado para binding no formulário de busca. */
 	public String pesquisar() {
 		return "";
 	}
-	
+
 	/** Pesquisa especificamente um local. Usado quando se tem um "id" sendo passado como parâmetro
 	 * @return List<Local> um listLocal de um elemento, para ser impresso na tela
 	 */
@@ -126,5 +106,5 @@ public class LocalController implements Serializable{
 		result.add(localService.pesquisar(id));
 		return result;
 	}
-	
+
 }
