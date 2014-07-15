@@ -3,10 +3,10 @@ package br.ufg.pw.entidades;
 import java.util.List;
 
 public class Local {
-	
+
 	//Atríbutos da classe
 	private String nome;
-	private List<Obstaculo> obstaculos;
+	private List<String> obstaculos;
 	private String endereco;
 	private String bairro;
 	private String cidade;
@@ -16,7 +16,7 @@ public class Local {
 	private double longitude;
 	private String usuarioInsersor;
 	private int id;
-	
+
 	//Métodos Getter e Setter
 	public String getNome() {
 		return nome;
@@ -24,10 +24,10 @@ public class Local {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public List<Obstaculo> getObstaculos() {
+	public List<String> getObstaculos() {
 		return obstaculos;
 	}
-	public void setObstaculos(List<Obstaculo> obstaculos) {
+	public void setObstaculos(List<String> obstaculos) {
 		this.obstaculos = obstaculos;
 	}
 	public String getEndereco() {
@@ -83,6 +83,6 @@ public class Local {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}	
-	
+	}
+
 }

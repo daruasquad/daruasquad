@@ -52,19 +52,11 @@ public class LocalDao {
 			pstmt.setString(9, "SRID=4326;POINT ( " + String.valueOf( local.getLatitude() ) + " " + String.valueOf( local.getLongitude() ) + " )");
 			pstmt.setString(10, local.getEndereco() );
 
-			pstmt.executeUpdate(); //Insere a informação do local dentro da transação
-
-			final int idLocal = buscarLocalEspecifico(local, conn, pstmt); //busca o ID do novo local no BD para inserir os tipos de obstáculos desse local;
-
-			// se o id for diferente de -1 chama o método de ObstaculoDao para inserir os obstáculos no local
-			if(idLocal != -1) {
-
-				ObstaculoDao obDao = new ObstaculoDao();
-				obDao.inserir(local.getObstaculos(), idLocal, conn, pstmt);
-
-			}
+			pstmt.executeUpdate(); //Insere a informação do local dentro da transação;
 
 			conn.commit(); //Se deu tudo certo, commita no Banco e encerra
+
+			inserirObstaculo(local, conn, pstmt);
 
 		} catch(Exception e) {
 			// Se der erro
@@ -82,6 +74,27 @@ public class LocalDao {
 			//Fecha a conexão com o Banco de Dados
 			JdbcUtil.close(conn, pstmt);
 		}
+	}
+
+	/** Esse método faz a inserção de obstáculos durante a transação de inserção de locais
+	 * @author brunokarpo
+	 * @param local: Objeto local passado pelo usuário do sistema
+	 * @return void: não retorna nada, por enquanto
+	 * @exception Exception: se der erro printa o StackTrace para tratarmos */
+	private void inserirObstaculo(Local local, Connection conn, PreparedStatement pstmt) {
+		try {
+
+			int idLocal = buscarLocalEspecifico(local, conn, pstmt);
+
+			ObstaculoDao obsDao = new ObstaculoDao();
+
+			if( obsDao.inserir(local.getObstaculos(), idLocal, conn, pstmt) ) conn.commit();
+			else excluir(local);
+
+		} catch(Exception e) {
+
+		}
+
 	}
 
 	/** Esse método retorna um array de locais que atendem os parâmetros da busca
@@ -171,36 +184,6 @@ public class LocalDao {
 	}
 
 
-//	/** Encontra um local específico através do ID passado pela aplicação na pesquisa
-//	 * @author brunokarpo
-//	 * @param id inteiro identificado no Banco de Dados
-//	 * @return local Local específico buscado pelo sistema */
-//	public Local buscar(MapBusca maps) {
-//
-//		Local local = null;
-//
-//		try {
-//			conn = JdbcUtil.createConnection();
-//
-//			pstmt = conn.prepareStatement("select * from local where id = ?");
-//			pstmt.setInt(1, );
-//
-//			rs = pstmt.executeQuery();
-//
-//			rs.next();
-//
-//			local = objetoLocal(rs);
-//
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			JdbcUtil.close(conn, pstmt, rs);
-//		}
-//
-//		return local;
-//	}
-
 	/** Método responsável pela exclusão de um local no Banco de Dados
 	 * @author brunokarpo
 	 * @param local: Referencia do local que será excluido
@@ -269,6 +252,8 @@ public class LocalDao {
 
 		} catch(Exception e) {
 			//id = -1;
+		} finally {
+			JdbcUtil.close(rs);
 		}
 
 		return id;

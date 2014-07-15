@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 
 import br.ufg.pw.entidades.Local;
 import br.ufg.pw.entidades.MapBusca;
-import br.ufg.pw.entidades.Obstaculo;
 import br.ufg.pw.services.LocalServices;
 
 /** Classe controladora das views que tratam funcionalidades dos locais e obstáculos */

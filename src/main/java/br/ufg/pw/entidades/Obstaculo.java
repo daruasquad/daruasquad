@@ -12,6 +12,6 @@ public class Obstaculo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
+
+
 }
