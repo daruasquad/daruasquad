@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufg.pw.entidades.Obstaculo;
 import br.ufg.pw.utilitarios.JdbcUtil;
 
 import javax.faces.bean.ApplicationScoped;
@@ -25,10 +24,10 @@ public class ObstaculoDao {
 	 * @author brunokarpo
 	 * @param idLocal inteiro que identifica o local no Banco
 	 * @return lista de objetos obstáculos pertinentes àquele local */
-	protected List<Obstaculo> buscar(int idLocal) {
+	protected List<String> buscar(int idLocal) {
 
-		List<Obstaculo> lista = new ArrayList<Obstaculo>();
-		Obstaculo obs = null;
+		List<String> lista = new ArrayList<String>();
+		String obs = null;
 
 		try {
 
@@ -40,9 +39,8 @@ public class ObstaculoDao {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
-				obs = new Obstaculo();
 
-				obs.setNome( rs.getString("nome_tipo_obstaculo") );
+				obs = rs.getString("nome_tipo_obstaculo") ;
 
 				lista.add(obs);
 			}
@@ -62,10 +60,10 @@ public class ObstaculoDao {
 	/** Método que lista os obstáculos cadastrados
 	 * @author danielmelo
 	 * @return lista de objetos obstáculos cadastrados */
-	public List<Obstaculo> buscar() {
+	public List<String> buscar() {
 
-		List<Obstaculo> lista = new ArrayList<Obstaculo>();
-		Obstaculo obs = null;
+		List<String> lista = new ArrayList<String>();
+		String obs = null;
 
 		try {
 
@@ -76,9 +74,8 @@ public class ObstaculoDao {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
-				obs = new Obstaculo();
 
-				obs.setNome( rs.getString("nome") );
+				obs = rs.getString("nome");
 
 				lista.add(obs);
 			}

@@ -5,4 +5,5 @@
 #Ignorar coisas
 .settings/*
 src/main/java/br/ufg/pw/testes/*.java
+configs/*
 

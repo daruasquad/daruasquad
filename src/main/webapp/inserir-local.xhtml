@@ -41,7 +41,7 @@
 
 
 			 <h:selectManyCheckbox  value="#{localBean.local.obstaculos}">
-			 	<f:selectItems value="#{obstaculoBean.listaObs}"  var="o"  itemLabel="#{o.nome}" itemValue="#{o.nome}" name="#{o.nome}"/>
+			 	<f:selectItems value="#{obstaculoBean.listaObs}"  var="o"  itemLabel="#{o}" itemValue="#{o}" name="#{o}"/>
 			 </h:selectManyCheckbox>
 
 			<h:commandButton value="Inserir" action="#{localBean.inserir}"	class="btn btn-default btn-sm" />

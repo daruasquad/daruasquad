@@ -17,14 +17,14 @@ import br.ufg.pw.entidades.Obstaculo;
 public class ObstaculoServices {	
 	
 	private ObstaculoDao obsDao = new ObstaculoDao();
-	private List<Obstaculo> obsDefault = this.getAllObstaculos();
+	private List<String> obsDefault = this.getAllObstaculos();
 	
 	
-	public List<Obstaculo> getObsDefault() {
+	public List<String> getObsDefault() {
 		return obsDefault;
 	}
 
-	public List<Obstaculo> getAllObstaculos() {	 
+	public List<String> getAllObstaculos() {	 
 		return obsDao.buscar();
 	}
 	
